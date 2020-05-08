@@ -1,6 +1,5 @@
 # Gastro Check In
 
-
 ## Idee
 Aufgrund von COVID-19 sollen gemäss Empfehlung des Bundes alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste zu registrieren. Dies soll das tracken von Kontakten im Falle einer COVID-19 Erkrankung eines Gastes vereinfachen.
 
@@ -16,7 +15,6 @@ Dabei wird das Passwort des Gastrobetriebes zum Verschlüsseln der Daten genutzt
 
 Über eine Weboberfläche kann sich der Gastrobetrieb einloggen und sich die Liste der Gäste ansehen. Alternativ kann er auf dieser Oberfläche auch Gäste manuell eintragen.
 
-
 ## Implementation
 Format für den QRCode:
 ```
@@ -25,7 +23,3 @@ Format für den QRCode:
 	"phone": "+41776665544"
 }
 ```
-
-
-
-
