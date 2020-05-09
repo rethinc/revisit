@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : FragmentActivity() {
 
@@ -60,9 +61,16 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun qrCodeScanned(qrCodeValue: String) {
-        showSuccessMessage("OK")
+        val person = Person.fromJson(qrCodeValue)
+        if (person != null) {
+            showSuccessMessage(getString(R.string.ok))
+            name.text = person.name
+            phone.text = person.phone
+        } else {
+            showErrorMessage(getString(R.string.error))
+        }
+
         rescan.visibility = VISIBLE
-        content.text = qrCodeValue
     }
 
     private fun IntArray.isPermissionGranted(): Boolean =
