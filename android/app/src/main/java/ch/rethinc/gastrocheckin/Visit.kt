@@ -3,7 +3,7 @@ package ch.rethinc.gastrocheckin
 import java.util.*
 
 data class Visit(
-    val id: UUID,
+    val id: String,
     val name: String,
     val phone: String,
     val visitedAt: Long
@@ -11,7 +11,7 @@ data class Visit(
     companion object {
         fun fromPerson(person: Person) =
             Visit(
-                id = UUID.randomUUID(),
+                id = UUID.randomUUID().toString(),
                 name = person.name,
                 phone =  person.phone,
                 visitedAt = System.currentTimeMillis()
