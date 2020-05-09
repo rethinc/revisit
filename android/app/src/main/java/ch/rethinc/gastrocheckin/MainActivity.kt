@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         scanNext.visibility = VISIBLE
+        introMessageContainer.visibility = GONE
     }
 
     private fun IntArray.isPermissionGranted(): Boolean =
@@ -140,6 +141,7 @@ class MainActivity : AppCompatActivity() {
         hideMessage()
         contentContainer.visibility = GONE
         scanNext.visibility = GONE
+        introMessageContainer.visibility = VISIBLE
     }
 
     private fun showSuccessMessage() {
