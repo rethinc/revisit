@@ -8,6 +8,8 @@
   const containerVisits = document.getElementById('containerVisits')
   const buttonSignOut = document.getElementById('buttonSignOut')
 
+  var loadVisitsUnsubscribe = null
+
   auth.onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       console.log(firebaseUser)
@@ -24,12 +26,15 @@
     containerVisits.classList.remove('hide')
     buttonSignOut.classList.remove('hide')
     buttonSignOut.addEventListener('click', signOut)
-    loadVisits(db, firebaseUser.uid)
+    loadVisitsUnsubscribe = loadVisits(db, firebaseUser.uid)
   }
 
   function showSignInView() {
     containerSignIn.classList.remove('hide')
     containerVisits.classList.add('hide')
+    if (loadVisitsUnsubscribe) {
+      loadVisitsUnsubscribe()
+    }
     buttonSignOut.classList.add('hide')
     buttonSignOut.removeEventListener('click', signOut)
     authUi.start('#containerSignIn', {
@@ -53,7 +58,7 @@
   }
 
   function loadVisits(db, userId) {
-    db
+    return db
       .collection('places')
       .doc(userId)
       .collection('visits')
@@ -65,7 +70,7 @@
         })
       }, error => {
         console.log(error.message)
-      })
+      });
   }
 
 }())
