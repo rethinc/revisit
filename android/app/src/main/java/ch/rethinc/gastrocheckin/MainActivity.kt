@@ -66,6 +66,7 @@ class MainActivity : FragmentActivity() {
             showSuccessMessage(getString(R.string.ok))
             name.text = person.name
             phone.text = person.phone
+            contentContainer.visibility = VISIBLE
         } else {
             showErrorMessage(getString(R.string.error))
         }
@@ -79,6 +80,8 @@ class MainActivity : FragmentActivity() {
     private fun startScanner() {
         qrCodeScanner.startScanning()
         hideMessage()
+        contentContainer.visibility = GONE
+        rescan.visibility = GONE
     }
 
     private fun showSuccessMessage(text: String) {
@@ -91,7 +94,6 @@ class MainActivity : FragmentActivity() {
         scanMessage.text = text
         scanMessage.visibility = VISIBLE
         scanMessage.setBackgroundColor(getColor(R.color.colorError))
-
     }
 
     private fun hideMessage() {
