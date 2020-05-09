@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseUser: FirebaseUser
 
+    private lateinit var visitRepository: VisitRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,9 +38,10 @@ class MainActivity : AppCompatActivity() {
         if (user == null) {
             SignInActivity.launch(this)
             finish()
-        } else {
-            firebaseUser = user
+            return
         }
+        firebaseUser = user
+        visitRepository = VisitRepositoryFirebase(FirebaseFirestore.getInstance(), firebaseUser)
     }
 
     override fun onResume() {
@@ -79,12 +84,21 @@ class MainActivity : AppCompatActivity() {
     private fun qrCodeScanned(qrCodeValue: String) {
         val person = Person.fromJson(qrCodeValue)
         if (person != null) {
-            showSuccessMessage(getString(R.string.ok))
+
             name.text = person.name
             phone.text = person.phone
             contentContainer.visibility = VISIBLE
+            val visit = Visit.fromPerson(person)
+            visitRepository.save(visit)
+                .addOnSuccessListener {
+                    showSuccessMessage()
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(MainActivity::class.java.name, "Error while saving visit", exception)
+                    showErrorMessage()
+                }
         } else {
-            showErrorMessage(getString(R.string.error))
+            showErrorMessage()
         }
 
         rescan.visibility = VISIBLE
@@ -100,14 +114,14 @@ class MainActivity : AppCompatActivity() {
         rescan.visibility = GONE
     }
 
-    private fun showSuccessMessage(text: String) {
-        scanMessage.text = text
+    private fun showSuccessMessage() {
+        scanMessage.text = getString(R.string.ok)
         scanMessage.visibility = VISIBLE
         scanMessage.setBackgroundColor(getColor(R.color.colorOkTransparent))
     }
 
-    private fun showErrorMessage(text: String) {
-        scanMessage.text = text
+    private fun showErrorMessage() {
+        scanMessage.text = getString(R.string.error)
         scanMessage.visibility = VISIBLE
         scanMessage.setBackgroundColor(getColor(R.color.colorErrorTransparent))
     }
