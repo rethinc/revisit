@@ -6,6 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
     private lateinit var firebaseUser: FirebaseUser
 
     private lateinit var visitRepository: VisitRepository
@@ -34,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val user = FirebaseAuth.getInstance().currentUser
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
         if (user == null) {
             SignInActivity.launch(this)
             finish()
@@ -57,6 +63,28 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         qrCodeScanner.onScanQrCode = null
         qrCodeScanner.stopScanning()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.logout -> {
+                signOut()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun signOut() {
+        firebaseAuth.signOut()
+        SignInActivity.launch(this)
+        finish()
     }
 
     override fun onRequestPermissionsResult(
