@@ -7,12 +7,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val cameraPermissionRequest = 1
@@ -87,13 +88,13 @@ class MainActivity : FragmentActivity() {
     private fun showSuccessMessage(text: String) {
         scanMessage.text = text
         scanMessage.visibility = VISIBLE
-        scanMessage.setBackgroundColor(getColor(R.color.colorOk))
+        scanMessage.setBackgroundColor(getColor(R.color.colorOkTransparent))
     }
 
     private fun showErrorMessage(text: String) {
         scanMessage.text = text
         scanMessage.visibility = VISIBLE
-        scanMessage.setBackgroundColor(getColor(R.color.colorError))
+        scanMessage.setBackgroundColor(getColor(R.color.colorErrorTransparent))
     }
 
     private fun hideMessage() {
