@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Gastro Checkin</string>
     <string name="scan_barcode_message">Scanne den Barcode des Kunden</string>
-    <string name="rescan">Erneut scannen</string>
+    <string name="scanNext">Nächsten Kunden scannen</string>
     <string name="ok">OK</string>
     <string name="error">Fehler</string>
 </resources>

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        rescan.setOnClickListener {
+        scanNext.setOnClickListener {
             askForPermissionAndStartScanner()
         }
         qrCodeScanner.onScanQrCode = this::qrCodeScanned
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             showErrorMessage()
         }
 
-        rescan.visibility = VISIBLE
+        scanNext.visibility = VISIBLE
     }
 
     private fun IntArray.isPermissionGranted(): Boolean =
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         qrCodeScanner.startScanning()
         hideMessage()
         contentContainer.visibility = GONE
-        rescan.visibility = GONE
+        scanNext.visibility = GONE
     }
 
     private fun showSuccessMessage() {
