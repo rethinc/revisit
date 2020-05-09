@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/scanner_fragment"
-        android:name="ch.rethinc.gastrocheckin.ScannerFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/scan_barcode_message"
-        />
+        android:layout_margin="22dp"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="false">
+
+            <ch.rethinc.gastrocheckin.QrCodeScannerView
+                android:id="@+id/qrCodeScanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/scanMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="22dp"
+        android:text="@string/scan_barcode_message" />
+
+    <Button
+        android:id="@+id/rescan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rescan"
+        android:layout_margin="22dp"
+        android:visibility="gone" />
 </LinearLayout>
