@@ -8,6 +8,16 @@
   const containerVisits = document.getElementById('containerVisits')
   const buttonSignOut = document.getElementById('buttonSignOut')
 
+  var visitsTable = new Tabulator("#containerVisits", {
+    layout:"fitColumns",
+    index: "id",
+    columns: [
+      {title: "Name", field: "name"},
+      {title: "Telefonnummer", field: "phone"},
+      {title: "Datum", field: "visitedAt"}
+    ]
+  });
+
   var loadVisitsUnsubscribe = null
 
   auth.onAuthStateChanged(firebaseUser => {
@@ -57,17 +67,24 @@
       auth.signOut()
   }
 
+
   function loadVisits(db, userId) {
     return db
       .collection('places')
       .doc(userId)
       .collection('visits')
       .onSnapshot(querySnapshot => {
-        containerVisits.innerHTML = ''
+        var visits = []
         querySnapshot.forEach(doc => {
-          let docData = doc.data()
-          containerVisits.innerHTML += docData['name'] + ', ' + docData['phone'] + ', ' + docData['visitedAt'] + '<br/>'
-        })
+          const docData = doc.data()
+          visits.push({
+            id: doc.id,
+            name: docData.name,
+            phone: docData.phone,
+            visitedAt: docData.visitedAt
+          })
+        });
+        visitsTable.setData(visits);
       }, error => {
         console.log(error.message)
       });
