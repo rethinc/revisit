@@ -6,7 +6,7 @@ data class Visit(
     val id: UUID,
     val name: String,
     val phone: String,
-    val vistedAt: Long
+    val visitedAt: Long
 ) {
     companion object {
         fun fromPerson(person: Person) =
@@ -14,7 +14,7 @@ data class Visit(
                 id = UUID.randomUUID(),
                 name = person.name,
                 phone =  person.phone,
-                vistedAt = System.currentTimeMillis()
+                visitedAt = System.currentTimeMillis()
             )
     }
 }
