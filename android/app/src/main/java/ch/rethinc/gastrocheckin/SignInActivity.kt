@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity() {
 
@@ -21,11 +22,18 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            MainActivity.launch(this)
+            finish()
+            return
+        }
+
         val emailProvider = AuthUI.IdpConfig.EmailBuilder().setRequireName(false).build()
 
         val intent = AuthUI
             .getInstance()
             .createSignInIntentBuilder()
+            .setIsSmartLockEnabled(false)
             .setAvailableProviders(arrayListOf(emailProvider))
             .build()
         startActivityForResult(intent, signInRequest)
