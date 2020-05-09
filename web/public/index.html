@@ -13,8 +13,15 @@
 </div>
 <button id="buttonSignOut" class="hide">Sign Out</button>
 
+<div id="containerCreate" class="hide">
+    <input type="text" id="textName" placeholder="Name"/>
+    <input type="text" id="textPhone" placeholder="Telefonnummer"/>
+    <button id="buttonCreate">Erfassen</button>
+</div>
 <div id="containerVisits" class="hide">
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -28,6 +35,9 @@
 
 <script src="/__/firebase/init.js"></script>
 
+<script src="date.format.js"></script>
+
 <script src="app.js"></script>
+
 </body>
 </html>
