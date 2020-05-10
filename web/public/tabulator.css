@@ -3,6 +3,7 @@
 .tabulator {
     position: relative;
     background-color: #fff;
+    border-radius: 4px;
     overflow: hidden;
     font-size: 1em;
     text-align: left;
@@ -11,6 +12,14 @@
     -ms-transform: translatez(0);
     transform: translatez(0);
     font-weight: 300;
+}
+
+svg.bi.bi-trash {
+    fill: #D2D2D2;
+}
+
+svg.bi.bi-trash:hover {
+    fill: #fff;
 }
 
 .tabulator[tabulator-layout="fitDataFill"] .tabulator-tableHolder .tabulator-table {
@@ -28,7 +37,7 @@
     box-sizing: border-box;
     width: 100%;
     border-top: none;
-    border-bottom: 2px solid #EEEEEE;
+    border-bottom: 1px solid #EEEEEE;
     background-color: #fff;
     font-weight: 500;
     white-space: nowrap;
@@ -150,7 +159,7 @@
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover {
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: #FCFCFC;
 }
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-arrow {
@@ -287,11 +296,11 @@
 }
 
 .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
-    border-bottom: 2px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
-    border-top: 2px solid #dee2e6;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 .tabulator .tabulator-col-resize-handle {
@@ -313,7 +322,7 @@
 
 .tabulator .tabulator-footer {
     padding: 5px 10px;
-    border-top: 2px solid #dee2e6;
+    border-bottom: 1px solid #EEEEEE;
     text-align: right;
     font-weight: 500;
     white-space: nowrap;
@@ -685,7 +694,8 @@
 }
 
 .tabulator-row.tabulator-selectable:hover {
-    background-color: #f5f5f5;
+    background-color: #50E3C2;
+    color: #fff;
     cursor: pointer;
 }
 
@@ -765,7 +775,7 @@
     display: inline-block;
     position: relative;
     box-sizing: border-box;
-    padding: 0.75rem;
+    padding: 1.25em 1em;
     vertical-align: middle;
     white-space: nowrap;
     overflow: hidden;
@@ -954,9 +964,9 @@
 
 .tabulator-row.tabulator-group.tabulator-group-visible .tabulator-arrow {
     margin-right: 10px;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #666;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #666;
     border-bottom: 0;
 }
 

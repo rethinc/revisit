@@ -101,7 +101,6 @@ form > * {
   font-weight: 500;
   color: #48CCAE;
   background-color: #ffffff;
-  padding: 0 10px;
 }
 
 .form-field {
@@ -129,6 +128,7 @@ form > * {
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
+  border: none;
 }
 
 .form-button:hover {
