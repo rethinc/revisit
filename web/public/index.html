@@ -2,23 +2,36 @@
 <html>
 <head>
     <title>gastro-checkin</title>
-    <link type="text/css" rel="stylesheet" href="app.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-    <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/tabulator.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+    <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="app.css"/>
 </head>
 <body>
 
-<div id="containerSignIn" class="hide">
+<div id="containerSignIn" class="content hide">
 </div>
-<button id="buttonSignOut" class="hide">Sign Out</button>
 
-<div id="containerCreate" class="hide">
-    <input type="text" id="textName" placeholder="Name"/>
-    <input type="text" id="textPhone" placeholder="Telefonnummer"/>
-    <button id="buttonCreate">Erfassen</button>
-</div>
-<div id="containerVisits" class="hide">
+<div id="containerSignedIn">
+    <div class="border-bottom shadow-sm navbar">
+        <p class="navbar-brand">gastro checkin</p>
+        <button id="buttonSignOut" class="btn btn-outline-primary">Sign Out</button>
+    </div>
+
+    <form id="containerCreate" class="container">
+        <h5>Besuch erfassen</h5>
+        <input type="text" id="textName" placeholder="Name" class="row form-control"/>
+        <input type="text" id="textPhone" placeholder="Telefonnummer" class="row form-control"/>
+        <button id="buttonCreate" class="row btn btn-primary">Erfassen</button>
+    </form>
+
+    <div class="container">
+        <div id="containerVisits">
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
@@ -38,6 +51,5 @@
 <script src="date.format.js"></script>
 
 <script src="app.js"></script>
-
 </body>
 </html>

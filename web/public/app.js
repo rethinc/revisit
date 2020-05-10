@@ -5,6 +5,7 @@
   const authUi = new firebaseui.auth.AuthUI(auth)
 
   const containerSignIn = document.getElementById('containerSignIn')
+  const containerSignedIn = document.getElementById('containerSignedIn')
   const containerVisits = document.getElementById('containerVisits')
   const buttonSignOut = document.getElementById('buttonSignOut')
   const containerCreate = document.getElementById('containerCreate')
@@ -34,11 +35,15 @@
         }
       },
       {
-        formatter: deleteIcon, width: 44, hozAlign: 'center', cellClick: (e, cell) => {
+        formatter: deleteIcon,
+        width: 44,
+        hozAlign: 'center',
+        cellClick: (e, cell) => {
           if (currentUser) {
             deleteVisit(cell.getRow().getData().id, currentUser.uid)
           }
-        }
+        },
+        headerSort:false
       }
     ]
   })
@@ -57,24 +62,19 @@
 
   function showSignedInView(firebaseUser) {
     containerSignIn.classList.add('hide')
-    containerSignIn.classList.add('hide')
-    containerCreate.classList.remove('hide')
+    containerSignedIn.classList.remove('hide')
     buttonCreate.addEventListener('click', createVisitFromForm)
-    containerVisits.classList.remove('hide')
-    buttonSignOut.classList.remove('hide')
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = loadVisits(db, firebaseUser.uid)
   }
 
   function showSignInView() {
-    containerSignIn.classList.remove('hide')
-    containerCreate.classList.add('hide')
+    containerSignIn.classList.reomve('hide')
+    containerSignedIn.classList.add('hide')
     buttonCreate.removeEventListener('click', createVisitFromForm)
-    containerVisits.classList.add('hide')
     if (loadVisitsUnsubscribe) {
       loadVisitsUnsubscribe()
     }
-    buttonSignOut.classList.add('hide')
     buttonSignOut.removeEventListener('click', signOut)
     buttonCreate.removeEventListener('click', signOut)
     authUi.start('#containerSignIn', {
