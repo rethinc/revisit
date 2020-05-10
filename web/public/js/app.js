@@ -6,9 +6,7 @@
 
   const containerSignIn = document.getElementById('containerSignIn')
   const containerSignedIn = document.getElementById('containerSignedIn')
-  const containerVisits = document.getElementById('containerVisits')
   const buttonSignOut = document.getElementById('buttonSignOut')
-  const containerCreate = document.getElementById('containerCreate')
   const textName = document.getElementById('textName')
   const textPhone = document.getElementById('textPhone')
   const buttonCreate = document.getElementById('buttonCreate')
@@ -159,5 +157,7 @@
         console.log(error.message)
       })
   }
+
+  console.log(decrypt("iw6WgfTJGC81wIYsQp26FOV/04miNYRo5PSqMFlNOKU=", getKey()));
 
 }())
