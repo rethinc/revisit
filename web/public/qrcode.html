@@ -2,27 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>gastro chekin</title>
 
+  <link type="text/css" rel="stylesheet" href="app.css"/>
 </head>
 <body>
-
-<div id="registrationForm">
-  <form action="qrcode.html" method="GET">
-    <h2>QR-Code erstellen</h2>
-    <label for="textName">Name</label>
-    <input type="text" id="textName" name="name" placeholder="Name"/>
-
-    <label for="textPhone">Telefonnummer</label>
-    <input type="text" id="textPhone" name="phone" placeholder="Telefonnummer"/>
-
-    <button id="buttonCreate" type="submit">Erfassen</button>
-  </form>
+  <div class="navbar">
+    <div class="navbar">
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
+    </div>
+  </div>
+  <div class="main-content">
+    <div id="registrationForm">
+      <form action="qrcode.html" method="GET" class="form">
+        <h2 class="form-title">QR-Code erstellen</h2>
+        <label for="textName">Name</label>
+        <input type="text" id="textName" name="name" placeholder="Name" class="form-field"/>
+        <label for="textPhone">Telefonnummer</label>
+        <input type="text" id="textPhone" name="phone" placeholder="Telefonnummer" class="form-field"/>
+        <button id="buttonCreate" class="form-button" type="submit" >Erfassen</button>
+      </form>
+    </div>
+  </div>
 </div>
 
-<div id="qrCode">
-
-</div>
+  <div id="qrCode">
 
 <script type="text/javascript" src="js/qrcode.min.js"></script>
 <script type="text/javascript" src="js/qrcode.base.js"></script>
