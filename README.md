@@ -23,3 +23,6 @@ Format für den QRCode:
 	"phone": "+41776665544"
 }
 ```
+
+## Credits & Libraries
+- JavaScript QrCode Generator https://github.com/kazuhikoarase/qrcode-generator
