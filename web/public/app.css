@@ -11,6 +11,7 @@ body {
   margin: 0;
   font-family: "Fira Sans", sans-serif;
   font-size: 16px;
+  background-color: #F5F5F5;
 }
 
 form > * {
@@ -20,6 +21,10 @@ form > * {
 
 :focus {
   outline-width: 0;
+}
+
+#containerSignIn {
+  padding: 120px;
 }
 
 #containerSignedIn {
@@ -82,18 +87,16 @@ form > * {
 }
 
 .form {
-  padding: 20px 20px 16px 20px;
+  padding: 16px 20px 20px 20px;
   border-radius: 4px;
   border: 2px solid #50E3C2;
   position: relative;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 }
 
 .form-title{
-  position: absolute;
-  top: -14px;
-  left: 10px;
   font-size: 14px;
   font-weight: 500;
   color: #48CCAE;

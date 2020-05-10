@@ -10,6 +10,7 @@
     max-width: 100%;
     -ms-transform: translatez(0);
     transform: translatez(0);
+    font-weight: 300;
 }
 
 .tabulator[tabulator-layout="fitDataFill"] .tabulator-tableHolder .tabulator-table {
@@ -268,8 +269,8 @@
     margin: 0 auto;
     padding: 10px;
     color: #132C45;
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 1em;
 }
 
 .tabulator .tabulator-tableHolder .tabulator-table {
@@ -281,7 +282,7 @@
 }
 
 .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.tabulator-calcs {
-    font-weight: bold;
+    font-weight: 500;
     background: #ececec !important;
 }
 
@@ -314,7 +315,7 @@
     padding: 5px 10px;
     border-top: 2px solid #dee2e6;
     text-align: right;
-    font-weight: bold;
+    font-weight: 500;
     white-space: nowrap;
     -ms-user-select: none;
     user-select: none;
@@ -423,7 +424,7 @@
     padding: 10px 20px;
     border-radius: 10px;
     background: #fff;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 16px;
 }
 
@@ -749,7 +750,7 @@
 }
 
 .tabulator-row .tabulator-responsive-collapse table {
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .tabulator-row .tabulator-responsive-collapse table tr td {
@@ -907,7 +908,7 @@
     border-radius: 20px;
     background: #666;
     color: #fff;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1.1em;
 }
 
@@ -942,7 +943,7 @@
     padding: 5px;
     padding-left: 10px;
     background: #fafafa;
-    font-weight: bold;
+    font-weight: 500;
     min-width: 100%;
 }
 
@@ -1007,7 +1008,7 @@
     background: #fff;
     border: 1px solid #dee2e6;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-    font-size: 1rem;
+    font-size: 1em;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     z-index: 10000;
@@ -1040,7 +1041,7 @@
     max-height: 200px;
     background: #fff;
     border: 1px solid #dee2e6;
-    font-size: 1rem;
+    font-size: 1em;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     z-index: 10000;
@@ -1070,7 +1071,7 @@
     border-bottom: 1px solid #dee2e6;
     padding: 4px;
     padding-top: 6px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .tabulator-print-fullscreen {
