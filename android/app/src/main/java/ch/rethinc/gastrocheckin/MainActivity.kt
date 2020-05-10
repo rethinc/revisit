@@ -13,8 +13,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import ch.rethinc.gastrocheckin.secretstore.SecretsStore
-import ch.rethinc.store.EncryptedSharedPreferencesStore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var secretsStore: SecretsStore
+    private lateinit var keyStore: GastroCheckinKeyStore
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -51,11 +49,10 @@ class MainActivity : AppCompatActivity() {
             return
         }
         firebaseUser = user
+
+        keyStore = GastroCheckinKeyStore.getInstance(this)
+
         visitRepository = VisitRepositoryFirebase(FirebaseFirestore.getInstance(), firebaseUser)
-        secretsStore = EncryptedSharedPreferencesStore.createInstance(
-            name = "ch.rethinc.gastrocheckin.secrets",
-            context = this
-        )
     }
 
     override fun onResume() {
@@ -63,6 +60,11 @@ class MainActivity : AppCompatActivity() {
         scanNext.setOnClickListener {
             askForPermissionAndStartScanner()
         }
+        if (keyStore.secretKey == null) {
+            DefineSecretActivity.launch(this)
+            return
+        }
+
         qrCodeScanner.onScanQrCode = this::qrCodeScanned
         askForPermissionAndStartScanner()
     }
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.logout -> {
                 signOut()
                 true
