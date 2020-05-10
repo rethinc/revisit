@@ -10,4 +10,5 @@
     <string name="save">Speichern</string>
     <string name="show_secret_key">Passwort anzeigen</string>
     <string name="delete_key">Passwort löschen</string>
+    <string name="password_error">Es wurde bereits ein Passwort gesetzt, welches nicht diesem Passwort entspricht.</string>
 </resources>
