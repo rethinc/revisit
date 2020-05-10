@@ -5,8 +5,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
     <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <link type="text/css" rel="stylesheet" href="app.css"/>
 </head>
 <body>
@@ -15,22 +14,31 @@
 </div>
 
 <div id="containerSignedIn">
-    <div class="border-bottom shadow-sm navbar">
-        <p class="navbar-brand">gastro checkin</p>
-        <button id="buttonSignOut" class="btn btn-outline-primary">Sign Out</button>
+
+    <div class="navbar">
+        <div class="navbar-items">
+            <a href="#/" class="navbar-logo-link">
+                <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
+            </a>
+            <button id="buttonSignOut" class="navbar-button">Abmelden</button>
+        </div>
     </div>
 
-    <form id="containerCreate" class="container">
-        <h5>Besuch erfassen</h5>
-        <input type="text" id="textName" placeholder="Name" class="row form-control"/>
-        <input type="text" id="textPhone" placeholder="Telefonnummer" class="row form-control"/>
-        <button id="buttonCreate" class="row btn btn-primary">Erfassen</button>
+    </div>
+<div class="main-content">
+
+    <form id="containerCreate" class="form">
+        <h2 class="form-title">Besuch erfassen</h2>
+        <input type="text" id="textName" placeholder="Name" class="form-field"/>
+        <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
+        <button id="buttonCreate" class="form-button">Erfassen</button>
     </form>
 
     <div class="container">
         <div id="containerVisits">
         </div>
     </div>
+</div>
 
 </div>
 
