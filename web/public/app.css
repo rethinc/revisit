@@ -58,7 +58,11 @@ form > * {
   flex: 0 0 auto;
 }
 
-.navbar-logo-link {}
+.navbar-logo-link {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
 
 .navbar-button {
   font-weight: 500;
@@ -87,8 +91,8 @@ form > * {
 }
 
 .qr-code {
-  padding: 4vh 4vw;
-  max-width: 600px;
+  padding: 4vh 4vw 0;
+  max-width: 200px;
   margin-left: auto;
   margin-right: auto;
 }
