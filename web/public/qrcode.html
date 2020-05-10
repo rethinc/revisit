@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <title>gastro chekin</title>
 
   <link type="text/css" rel="stylesheet" href="app.css"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="gastro checkin">
+  <meta name="application-name" content="gastro checkin">
+  <meta name="msapplication-TileColor" content="#132c45">
+  <meta name="msapplication-config" content="favicon/browserconfig.xml">
+  <meta name="theme-color" content="#132c45">
 </head>
 <body>
   <div class="navbar">
@@ -12,16 +23,18 @@
         <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
     </div>
   </div>
-  <div id="qrCode"></div>
+  <div class="qr-code">
+    <div id="qrCode" class="qr-code-image"></div>
+  </div>
   <div class="main-content">
     <div id="registrationForm">
       <form action="qrcode.html" method="GET" class="form">
         <h2 class="form-title">QR-Code erstellen</h2>
-        <label for="textName">Name</label>
-        <input type="text" id="textName" name="name" placeholder="Name" class="form-field"/>
-        <label for="textPhone">Telefonnummer</label>
-        <input type="text" id="textPhone" name="phone" placeholder="Telefonnummer" class="form-field"/>
-        <button id="buttonCreate" class="form-button" type="submit" >Erfassen</button>
+        <label for="textName" class="form-label">Name</label>
+        <input type="text" id="textName" name="name" placeholder="Dwight Shrute" class="form-field"/>
+        <label for="textPhone" class="form-label">Telefonnummer</label>
+        <input type="text" id="textPhone" name="phone" placeholder="+41 79 123 45 67" class="form-field"/>
+        <button id="buttonCreate" class="form-button" type="submit" >QR-Code generieren</button>
       </form>
     </div>
   </div>

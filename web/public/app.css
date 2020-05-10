@@ -8,6 +8,7 @@ html {
 }
 
 body {
+  padding-top: 70px;
   margin: 0;
   font-family: "Fira Sans", sans-serif;
   font-size: 16px;
@@ -79,11 +80,26 @@ form > * {
 }
 
 .main-content {
-  margin-top: 70px;
   padding: 4vh 4vw;
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.qr-code {
+  padding: 4vh 4vw;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.qr-code-image {
+  width: 100%;
+}
+
+.qr-code-image img {
+  width: 100%;
+  height: auto;
 }
 
 .form {
@@ -97,10 +113,17 @@ form > * {
 }
 
 .form-title{
-  font-size: 14px;
-  font-weight: 500;
-  color: #48CCAE;
+  font-size: 18px;
+  font-weight: 400;
+  color: #132C45;
   background-color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #48CCAE;
 }
 
 .form-field {
@@ -109,7 +132,11 @@ form > * {
   border: 1px solid #EEEEEE;
   background-color: #EEEEEE;
   padding: 12px;
-  margin-bottom: 8px;
+  margin: 0 0 12px;
+}
+
+::placeholder {
+  color: #D2D2D2;
 }
 
 .form-field:focus {
