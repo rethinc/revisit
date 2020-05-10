@@ -18,8 +18,8 @@ function generateQrCode (name, phone) {
   )
 }
 
-function hideRegistrationForm() {
-  document.getElementById('registrationForm').style.display = 'none';
+function hideRegistrationForm () {
+  document.getElementById('registrationForm').style.display = 'none'
 }
 
 function isUserDataPresent () {
@@ -29,8 +29,8 @@ function isUserDataPresent () {
   const phone = urlParams.get('phone')
 
   if (name && phone) {
-    generateQrCode(name, phone)
     hideRegistrationForm()
+    generateQrCode(name, phone)
   }
 }
 
