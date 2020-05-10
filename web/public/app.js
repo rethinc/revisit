@@ -69,7 +69,7 @@
   }
 
   function showSignInView() {
-    containerSignIn.classList.reomve('hide')
+    containerSignIn.classList.remove('hide')
     containerSignedIn.classList.add('hide')
     buttonCreate.removeEventListener('click', createVisitFromForm)
     if (loadVisitsUnsubscribe) {
