@@ -6,4 +6,8 @@
     <string name="error">Fehler</string>
     <string name="logout">Ausloggen</string>
     <string name="intro_message">Scanne den Barcode des Kunden um seinen Besuch zu registrieren.</string>
+    <string name="enter_secret_message">Gib ein Passwort ein, mit welchem deine Daten verschlüsselt werden. Nur wer dieses Passwort hat, hat Zugriff auf die Daten. Dieses Passwort darfst du nicht verlieren.</string>
+    <string name="save">Speichern</string>
+    <string name="show_secret_key">Passwort anzeigen</string>
+    <string name="delete_key">Passwort löschen</string>
 </resources>

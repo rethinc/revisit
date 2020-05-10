@@ -3,4 +3,7 @@
     <item android:id="@+id/logout"
         android:title="@string/logout" >
     </item>
+    <item android:id="@+id/define_secret"
+        android:title="@string/show_secret_key" >
+    </item>
 </menu>
