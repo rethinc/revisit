@@ -35,7 +35,8 @@ form > * {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center
+  justify-content: center;
+  z-index: 999;
 }
 
 .navbar-items {
@@ -129,4 +130,8 @@ form > * {
 
 .form-button:hover {
   background-color: #48CCAE;
+}
+
+.visitors {
+  margin: 24px 0;
 }

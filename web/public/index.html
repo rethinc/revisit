@@ -5,8 +5,9 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
     <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css"
           rel="stylesheet">
-
     <link type="text/css" rel="stylesheet" href="app.css"/>
+    <link type="text/css" rel="stylesheet" href="tabulator.css"/>
+
 </head>
 <body>
 
@@ -23,22 +24,20 @@
             <button id="buttonSignOut" class="navbar-button">Abmelden</button>
         </div>
     </div>
-
-    </div>
-<div class="main-content">
-
-    <form id="containerCreate" class="form">
-        <h2 class="form-title">Besuch erfassen</h2>
-        <input type="text" id="textName" placeholder="Name" class="form-field"/>
-        <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
-        <button id="buttonCreate" class="form-button">Erfassen</button>
-    </form>
-
-    <div class="container">
-        <div id="containerVisits">
+    <div class="main-content">
+        <form id="containerCreate" class="form">
+            <h2 class="form-title">Besuch erfassen</h2>
+            <input type="text" id="textName" placeholder="Name" class="form-field"/>
+            <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
+            <button id="buttonCreate" class="form-button">Erfassen</button>
+        </form>
+        <div class="visitors">
+            <div id="containerVisits">
+            </div>
         </div>
     </div>
 </div>
+
 
 </div>
 
