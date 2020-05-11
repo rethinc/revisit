@@ -189,7 +189,7 @@
   }
 
   function loadVisits(db, userId) {
-    return getSalt().then(salt => {
+    return getSalt(db, userId).then(salt => {
       return db
         .collection('places')
         .doc(userId)
