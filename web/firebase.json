@@ -8,6 +8,18 @@
     ],
     "rewrites": [
       {
+        "source": "/qrcode",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/restaurant",
+        "destination": "/restaurant.html"
+      },
+      {
+        "source": "/privacy",
+        "destination": "/privacy.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

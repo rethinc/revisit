@@ -1,91 +1,78 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>re:visit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
-    <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="style/app.css"/>
-    <link type="text/css" rel="stylesheet" href="style/tabulator.css"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-    <link rel="manifest" href="favicon/site.webmanifest">
-    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
-    <link rel="shortcut icon" href="favicon/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="gastro checkin">
-    <meta name="application-name" content="gastro checkin">
-    <meta name="msapplication-TileColor" content="#132c45">
-    <meta name="msapplication-config" content="favicon/browserconfig.xml">
-    <meta name="theme-color" content="#132c45">
-  </head>
-  <body>
-    <div id="containerSignIn" class="content hide">
-        <div class="navbar">
-            <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
-        </div>
-    </div>
-    <div id="containerSecretKey" class="content hide">
-        <div class="navbar">
-            <div class="navbar-items">
-                <a href="#" class="navbar-logo-link">
-                    <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
-                </a>
-                <button id="buttonSignOutSecret" class="navbar-button">Abmelden</button>
-            </div>
-        </div>
-        <div id="formEnterSecretKey" class="form">
-            <h2 class="form-title">Passwort zum Verschl&uuml;sseln eingeben</h2>
-            <p>Gib ein Passwort ein, mit welchem deine Daten verschl&uuml;sselt werden. Nur wer dieses Passwort hat, hat Zugriff auf die Daten. Dieses Passwort darfst du nicht verlieren.</p>
-            <p id="messageSecretError" class="error hide">Es wurde bereits ein Passwort gesetzt, welches nicht diesem Passwort entspricht.</p>
-            <input type="text" id="textSecretKey" placeholder="Paswort" class="form-field"/>
-            <button id="buttonSecretKey" class="form-button">OK</button>
-        </div>
-    </div>
-    <div id="containerSignedIn">
-        <div class="navbar">
-            <div class="navbar-items">
-                <a href="#" class="navbar-logo-link">
-                    <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
-                </a>
-                <button id="buttonSignOut" class="navbar-button">Abmelden</button>
-            </div>
-        </div>
-        <div class="main-content">
-            <div id="containerCreate" class="form">
-                <h2 class="form-title">Besuch erfassen</h2>
-                <input type="text" id="textName" placeholder="Name" class="form-field"/>
-                <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
-                <button id="buttonCreate" class="form-button">Erfassen</button>
-            </div>
-            <div class="visitors">
-                <div id="containerVisits">
-                </div>
-            </div>
-        </div>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>re:visit</title>
+  <link type="text/css" rel="stylesheet" href="style/app.css"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="gastro checkin">
+  <meta name="application-name" content="gastro checkin">
+  <meta name="msapplication-TileColor" content="#132c45">
+  <meta name="msapplication-config" content="favicon/browserconfig.xml">
+  <meta name="theme-color" content="#132c45">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-items">
+      <div></div>
+      <a href="#" class="navbar-logo-link">
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
+      </a>
+      <div></div>
     </div>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.6.2/dist/js/tabulator.min.js"></script>
-    <script>
-      var firebaseConfig = {
-        apiKey: 'AIzaSyAFPTOBgRVaunHBY5tP1wiZbjnwQLC9y_A',
-        authDomain: 'gastro-checkin.firebaseapp.com',
-        databaseURL: 'https://gastro-checkin.firebaseio.com',
-        projectId: 'gastro-checkin',
-        storageBucket: 'gastro-checkin.appspot.com',
-        messagingSenderId: '1077652043096',
-        appId: '1:1077652043096:web:d88109016e93a447e0612d'
-      }
-      firebase.initializeApp(firebaseConfig)
-    </script>
-    <script src="js/date.format.js"></script>
-    <script src="js/encryption.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+  <div class="qr-code">
+    <div id="qrCode" class="qr-code-image"></div>
+  </div>
+  <div class="main-content">
+    <div id="registrationForm">
+      <form action="index.html" method="GET" class="form">
+        <h2 class="form-title">QR-Code erstellen</h2>
+        <label for="textName" class="form-label">Name</label>
+        <input type="text" id="textName" name="name" placeholder="Maurice Moss" class="form-field"/>
+        <label for="textPhone" class="form-label">Telefonnummer</label>
+        <input type="text" id="textPhone" name="phone" placeholder="+41 79 123 45 67" class="form-field"/>
+        <button id="buttonCreate" class="form-button" type="submit" >QR-Code generieren</button>
+      </form>
+    </div>
+  </div>
+  <div class="section">
+    <a href="#help-modal" class="help-link">So funktionierts</a>
+  </div>
+  <div id="help-modal" class="help">
+    <div class="help-overlay">
+      <div class="overlay-header">
+        <h2 class="form-title">So funktionierts</h2>
+        <a href="#" class="help-close">
+          <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen"/>
+        </a>
+      </div>
+      <div class="overlay-content">
+        <p class="intro">Aufgrund von COVID-19 sollen gemäss Empfehlung des Bundes alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste zu registrieren. Dies soll das tracken von Kontakten im Falle einer COVID-19 Erkrankung eines Gastes vereinfachen.
+        </p>
+        <img class="content-image" src="assets/svg/generate-code.svg" alt="QR-Code erstellen"/>
+        <h2 class="form-title">1. QR-Code generieren</h2>
+        <p>Generiere einen QR-Code mit deinen Kontaktangaben für die freiwillige Identifizierung im Gastronomie Betrieb.</p>
+
+        <img class="content-image" src="assets/svg/show-code.svg" alt="QR-Code vorweisen"/>
+        <h2 class="form-title">2. Service Personal zum  scannen geben</h2>
+        <p>Generierer QR-Code dem Service Personal zum scannen vorweisen. Deine Daten werden nur für diesen Betrieb einsehbar verschlüsselt für 14 Tage gespeichert.</p>
+
+        <img class="content-image" src="assets/svg/save-code.svg" alt="QR-Code speichern"/>
+        <h2 class="form-title">3. QR-Code für nächsten Besuch speichern</h2>
+        <p>Füge die Seite mit dem generierten QR-Code deinen <b>Lesezeichen oder deinem Home Screen hinzu,</b> um diesen für deinen nächsten Besuch bereit zu haben.</p> <br><br>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/qrcode.base.js"></script>
+</body>
 </html>
