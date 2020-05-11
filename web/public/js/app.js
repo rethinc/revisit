@@ -62,7 +62,6 @@
     if (firebaseUser) {
       currentUser = firebaseUser
       let secretKey = getSecretKey()
-      console.log('secret key', secretKey)
       if (secretKey) {
         showSignedInView(firebaseUser)
       } else {
@@ -153,21 +152,24 @@
   }
 
   function createVisit(name, phone, userId) {
-    let visit = {
-      id: uuidv4(),
-      name: name,
-      phone: phone,
-      visitedAt: Date.now()
-    }
-    db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .doc(visit.id)
-      .set(visit)
-      .then(() => {
-        textPhone.value = ''
-        textName.value = ''
+    return getSalt(db, userId)
+      .then(salt => {
+        let visit = {
+          id: uuidv4(),
+          name: encrypt(name, getSecretKey(), salt),
+          phone: encrypt(phone, getSecretKey(), salt),
+          visitedAt: Date.now()
+        }
+        return db
+          .collection('places')
+          .doc(userId)
+          .collection('visits')
+          .doc(visit.id)
+          .set(visit)
+          .then(() => {
+            textPhone.value = ''
+            textName.value = ''
+          })
       })
       .catch(error =>
         console.error(error.message)
@@ -187,26 +189,30 @@
   }
 
   function loadVisits(db, userId) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .onSnapshot(querySnapshot => {
-        var visits = []
-        querySnapshot.forEach(doc => {
-          const docData = doc.data()
-          visits.push({
-            id: doc.id,
-            name: docData.name,
-            phone: docData.phone,
-            visitedAt: docData.visitedAt
+    return getSalt().then(salt => {
+      return db
+        .collection('places')
+        .doc(userId)
+        .collection('visits')
+        .onSnapshot(querySnapshot => {
+          var visits = []
+          querySnapshot.forEach(doc => {
+            const docData = doc.data()
+            visits.push({
+              id: doc.id,
+              name: decrypt(docData.name, getSecretKey(), salt),
+              phone: decrypt(docData.phone, getSecretKey(), salt),
+              visitedAt: docData.visitedAt
+            })
           })
+          currentData = new Set(visits)
+          visitsTable.setData(visits)
+        }, error => {
+          console.error(error.message)
         })
-        currentData = new Set(visits)
-        visitsTable.setData(visits)
-      }, error => {
-        console.error(error.message)
-      })
+    }).catch(error => {
+      consoele.error(error.message)
+    })
   }
 
   function getOrCreateSalt(db, userId) {
@@ -263,14 +269,15 @@
       .then(doc => {
         let storedChallenge = doc.data()['challenge'];
         if (storedChallenge) {
-          return decrypt(storedChallenge, password, salt) === challenge
+          let decrypted = decrypt(storedChallenge, password, salt)
+          return decrypted === challenge
         } else {
           return saveEncryptedChallenge(db, userId, password, salt, challenge)
             .then(e => {
               return true
             })
             .catch(error => {
-              console.log('Could not store encrypted Challenge', error)
+              console.error('Could not store encrypted Challenge', error)
             })
         }
       }).catch(error => {
