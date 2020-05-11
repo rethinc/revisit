@@ -70,8 +70,10 @@
       },
     ],
     initialSort:[
-      {column:"visitedAt", dir:"desc"},
-      {column:"name", dir:"asc"}
+      {
+        column: 'visitedAt',
+        dir: 'desc'
+      }
     ]
   })
 
