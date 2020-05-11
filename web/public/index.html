@@ -1,88 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>gastro-checkin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
-  <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css"
-        rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="app.css"/>
-  <link type="text/css" rel="stylesheet" href="tabulator.css"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-  <link rel="manifest" href="favicon/site.webmanifest">
-  <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
-  <link rel="shortcut icon" href="favicon/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="gastro checkin">
-  <meta name="application-name" content="gastro checkin">
-  <meta name="msapplication-TileColor" content="#132c45">
-  <meta name="msapplication-config" content="favicon/browserconfig.xml">
-  <meta name="theme-color" content="#132c45">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<div id="containerSignIn" class="content hide">
-    <div class="navbar">
-        <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
-    </div>
-</div>
-
-<div id="containerSignedIn">
-
-    <div class="navbar">
-        <div class="navbar-items">
-            <a href="#/" class="navbar-logo-link">
-                <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
-            </a>
-            <button id="buttonSignOut" class="navbar-button">Abmelden</button>
+  <head>
+    <title>gastro-checkin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+    <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css"
+          rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="app.css"/>
+    <link type="text/css" rel="stylesheet" href="tabulator.css"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="gastro checkin">
+    <meta name="application-name" content="gastro checkin">
+    <meta name="msapplication-TileColor" content="#132c45">
+    <meta name="msapplication-config" content="favicon/browserconfig.xml">
+    <meta name="theme-color" content="#132c45">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="containerSignIn" class="content hide">
+        <div class="navbar">
+            <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
         </div>
     </div>
-    <div class="main-content">
-        <form id="containerCreate" class="form">
-            <h2 class="form-title">Besuch erfassen</h2>
-            <input type="text" id="textName" placeholder="Name" class="form-field"/>
-            <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
-            <button id="buttonCreate" class="form-button">Erfassen</button>
-        </form>
-        <div class="visitors">
-            <div id="containerVisits">
+
+    <div id="containerSignedIn">
+
+        <div class="navbar">
+            <div class="navbar-items">
+                <a href="#/" class="navbar-logo-link">
+                    <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
+                </a>
+                <button id="buttonSignOut" class="navbar-button">Abmelden</button>
+            </div>
+        </div>
+        <div class="main-content">
+            <form id="containerCreate" class="form">
+                <h2 class="form-title">Besuch erfassen</h2>
+                <input type="text" id="textName" placeholder="Name" class="form-field"/>
+                <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
+                <button id="buttonCreate" class="form-button">Erfassen</button>
+            </form>
+            <div class="visitors">
+                <div id="containerVisits">
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
-
-<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
-
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.6.2/dist/js/tabulator.min.js"></script>
-
-<script>
-  var firebaseConfig = {
-    apiKey: 'AIzaSyAFPTOBgRVaunHBY5tP1wiZbjnwQLC9y_A',
-    authDomain: 'gastro-checkin.firebaseapp.com',
-    databaseURL: 'https://gastro-checkin.firebaseio.com',
-    projectId: 'gastro-checkin',
-    storageBucket: 'gastro-checkin.appspot.com',
-    messagingSenderId: '1077652043096',
-    appId: '1:1077652043096:web:d88109016e93a447e0612d'
-  }
-  firebase.initializeApp(firebaseConfig)
-</script>
-
-<script src="js/date.format.js"></script>
-
-<script src="js/app.js"></script>
-</body>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.6.2/dist/js/tabulator.min.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: 'AIzaSyAFPTOBgRVaunHBY5tP1wiZbjnwQLC9y_A',
+        authDomain: 'gastro-checkin.firebaseapp.com',
+        databaseURL: 'https://gastro-checkin.firebaseio.com',
+        projectId: 'gastro-checkin',
+        storageBucket: 'gastro-checkin.appspot.com',
+        messagingSenderId: '1077652043096',
+        appId: '1:1077652043096:web:d88109016e93a447e0612d'
+      }
+      firebase.initializeApp(firebaseConfig)
+    </script>
+    <script src="js/date.format.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
