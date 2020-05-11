@@ -124,6 +124,10 @@ form > * {
   height: auto;
 }
 
+.error {
+  color: #FF0000;
+}
+
 .form {
   padding: 16px 20px 20px 20px;
   border-radius: 4px;
