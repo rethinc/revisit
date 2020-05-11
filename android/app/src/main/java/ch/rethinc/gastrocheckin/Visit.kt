@@ -6,15 +6,19 @@ data class Visit(
     val id: String,
     val name: String,
     val phone: String,
-    val visitedAt: Long
+    val visitedAt: Long,
+    val table: String,
+    val waiter: String
 ) {
     companion object {
-        fun fromPerson(person: Person) =
+        fun from(person: Person, additionalInformation: AdditionalInformation) =
             Visit(
                 id = UUID.randomUUID().toString(),
                 name = person.name,
                 phone =  person.phone,
-                visitedAt = System.currentTimeMillis()
+                visitedAt = System.currentTimeMillis(),
+                table = additionalInformation.table,
+                waiter = additionalInformation.waiter
             )
     }
 }

@@ -2,7 +2,6 @@ package ch.rethinc.gastrocheckin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import ch.rethinc.gastrocheckin.secretstore.GastroCheckinEncryptor
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,9 +13,7 @@ class VisitRepositoryFirebase(
 ) : VisitRepository {
 
     override fun save(visit: Visit): LiveData<Result<Unit>> =
-        Transformations.switchMap(encrypt(visit)) { encryptedVisit ->
-            storeInFirebase(encryptedVisit)
-        }
+        storeInFirebase(encrypt(visit))
 
     private fun storeInFirebase(visit: Visit): LiveData<Result<Unit>> {
         val liveData = MutableLiveData<Result<Unit>>()
@@ -35,14 +32,12 @@ class VisitRepositoryFirebase(
     }
 
 
-    private fun encrypt(visit: Visit): LiveData<Visit> =
-        Transformations.switchMap(encryptor.encrypt(visit.name)) { encryptedNameResult ->
-            Transformations.map(encryptor.encrypt(visit.phone)) { encryptedPhoneResult ->
-                visit.copy(
-                    name = encryptedNameResult.getOrThrow(),
-                    phone = encryptedPhoneResult.getOrThrow()
-                )
-            }
-        }
+    private fun encrypt(visit: Visit): Visit =
+        visit.copy(
+            name = encryptor.encrypt(visit.name) ?: "",
+            phone = encryptor.encrypt(visit.phone) ?: "",
+            table = encryptor.encrypt(visit.table) ?: "",
+            waiter = encryptor.encrypt(visit.waiter) ?: ""
+        )
 
 }

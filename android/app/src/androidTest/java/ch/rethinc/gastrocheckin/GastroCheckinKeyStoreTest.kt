@@ -3,8 +3,8 @@ package ch.rethinc.gastrocheckin
 import ch.rethinc.gastrocheckin.secretstore.SecretsStore
 import ch.rethinc.gastrocheckin.secretstore.SecretsStoreInMemory
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Before
+import org.junit.Test
 
 class GastroCheckinKeyStoreTest {
 
@@ -12,7 +12,7 @@ class GastroCheckinKeyStoreTest {
 
     private lateinit var keyStore: GastroCheckinKeyStore
 
-    @BeforeEach
+    @Before
     fun setUp() {
         secretsStore = SecretsStoreInMemory()
         keyStore = GastroCheckinKeyStore(secretsStore)
@@ -20,7 +20,7 @@ class GastroCheckinKeyStoreTest {
 
     @Test
     fun storesSecretKey() {
-        val key = "myKey"
+        val key = "myKey".toByteArray()
 
         keyStore.secretKey = key
         val result = keyStore.secretKey
@@ -30,8 +30,7 @@ class GastroCheckinKeyStoreTest {
 
     @Test
     fun removesSecretKey() {
-        val key = "myKey"
-        keyStore.secretKey = "myKey"
+        keyStore.secretKey = "myKey".toByteArray()
 
         keyStore.secretKey = null
 

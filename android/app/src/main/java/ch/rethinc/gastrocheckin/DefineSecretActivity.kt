@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
 import ch.rethinc.gastrocheckin.secretstore.GastroCheckinEncryptor
 import ch.rethinc.gastrocheckin.secretstore.KeyDerivator
 import ch.rethinc.gastrocheckin.secretstore.SecretKeyValidation
@@ -27,28 +30,28 @@ class DefineSecretActivity : AppCompatActivity() {
 
     private lateinit var secretKeyValidation: SecretKeyValidation
 
+    private lateinit var keyDerivator: KeyDerivator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_define_secret)
-        gastroCheckinKeyStore =GastroCheckinKeyStore.getInstance(this)
+        gastroCheckinKeyStore = GastroCheckinKeyStore.getInstance(this)
         val user = FirebaseAuth.getInstance().currentUser!!
         val firestore = FirebaseFirestore.getInstance()
         secretKeyValidation =
             SecretKeyValidation(
                 firestore,
                 user,
-                GastroCheckinEncryptor(
-                    GastroCheckinKeyStore.getInstance(this),
-                    KeyDerivator(SaltRepositoryFirebase(firestore, user))
-                )
+                GastroCheckinEncryptor(GastroCheckinKeyStore.getInstance(this))
             )
+        keyDerivator = KeyDerivator(SaltRepositoryFirebase(firestore, user))
     }
 
     override fun onResume() {
         super.onResume()
-        val secretKey = gastroCheckinKeyStore.secretKey
-        if (secretKey != null) {
-            showDisplayView(secretKey)
+        val userPassword = gastroCheckinKeyStore.userPasssword
+        if (userPassword != null) {
+            showDisplayView(userPassword)
         } else {
             showCreateView()
         }
@@ -61,6 +64,7 @@ class DefineSecretActivity : AppCompatActivity() {
         secret.setText(secretetKey)
         remove_secret.setOnClickListener {
             gastroCheckinKeyStore.secretKey = null
+            gastroCheckinKeyStore.userPasssword = null
             showCreateView()
         }
     }
@@ -71,17 +75,37 @@ class DefineSecretActivity : AppCompatActivity() {
         secret.isEnabled = true
         secret.text.clear()
         save_secret.setOnClickListener {
-            val secretKey = secret.text.toString()
-            secretKeyValidation.isValid(secretKey)
-                .observe(this, Observer {isValid ->
-                    if(isValid) {
-                        gastroCheckinKeyStore.secretKey = secretKey
-                        finish()
-                    } else {
-                        secret.setError(getString(R.string.password_error))
-                    }
-                })
+            val userPassword = secret.text.toString()
+
+            Transformations.switchMap(keyDerivator.deriveKey(userPassword)) { resultSecretKey ->
+                Transformations.map(isValid(resultSecretKey)) {isValid ->
+                    resultSecretKey to isValid
+                }
+            }.observe(this, Observer { (resultSecretKey, isValid) ->
+                if (isValid) {
+                    gastroCheckinKeyStore.userPasssword = userPassword
+                    gastroCheckinKeyStore.secretKey = resultSecretKey.getOrThrow()
+                    finish()
+                } else {
+                    secret.setError(getString(R.string.password_error))
+                }
+            })
 
         }
+    }
+
+    private fun isValid(resultSecretKey: Result<ByteArray>): LiveData<Boolean> {
+        val secretKey = resultSecretKey.getOrNull()
+        return if (secretKey == null) {
+            singleValue(false)
+        } else {
+            secretKeyValidation.isValid(secretKey)
+        }
+    }
+
+    private fun singleValue(value: Boolean): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+        liveData.postValue(value)
+        return liveData
     }
 }
