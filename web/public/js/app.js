@@ -32,17 +32,28 @@
       '</svg>'
   }
 
-
   var visitsTable = new Tabulator('#containerVisits', {
     layout: 'fitColumns',
     index: 'id',
     columns: [
-      {title: 'Name', field: 'name', editor: 'input'},
-      {title: 'Telefonnummer', field: 'phone'},
       {
-        title: 'Datum', field: 'visitedAt', formatter: (cell, formatterParams) => {
+        title: 'Name',
+        field: 'name',
+        headerFilter: 'input',
+        headerFilterPlaceholder: 'Nach Namen filtern'
+      },
+      {
+        title: 'Telefonnummer',
+        field: 'phone'
+      },
+      {
+        title: 'Datum',
+        field: 'visitedAt',
+        formatter: (cell, formatterParams) => {
           return new Date(cell.getValue()).format('d.m.Y H:i')
-        }
+        },
+        headerFilter: 'input',
+        headerFilterPlaceholder: 'Nach Datum filtern'
       },
       {title: 'Tisch', field: 'table'},
       {title: 'Bedienung', field: 'waiter'},
@@ -59,7 +70,8 @@
       },
     ],
     initialSort:[
-      {column:"visitedAt", dir:"desc"}
+      {column:"visitedAt", dir:"desc"},
+      {column:"name", dir:"asc"}
     ]
   })
 
