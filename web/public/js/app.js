@@ -152,12 +152,13 @@
   }
 
   function createVisit(name, phone, userId) {
+    let secretKey = getSecretKey()
     return getSalt(db, userId)
       .then(salt => {
         let visit = {
           id: uuidv4(),
-          name: encrypt(name, getSecretKey(), salt),
-          phone: encrypt(phone, getSecretKey(), salt),
+          name: encrypt(name, secretKey, salt),
+          phone: encrypt(phone, secretKey, salt),
           visitedAt: Date.now()
         }
         return db
