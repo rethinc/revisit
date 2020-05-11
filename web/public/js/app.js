@@ -105,16 +105,17 @@
       messageSecretError.classList.add('hide')
       getOrCreateSalt(db, firebaseUser.uid)
         .then(salt => {
-          let secretKey = textSecretKey.value
-          if (!secretKey || secretKey === '') {
+          let password = textSecretKey.value
+          if (!password || password === '') {
             messageSecretError.classList.remove('hide')
           }
-          isSecretKeyValid(db, firebaseUser.uid, secretKey, salt)
+          let secretKey = deriveKey(password, salt)
+          isSecretKeyValid(db, firebaseUser.uid, secretKey)
             .then(isValid => {
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
               } else {
-                saveSecretKey(textSecretKey.value)
+                saveSecretKey(secretKey)
                 showSignedInView(firebaseUser)
               }
             })
@@ -173,28 +174,26 @@
   }
 
   function createVisit(name, phone, table, waiter, userId) {
-    return getSalt(db, userId)
-      .then(salt => {
-        let visit = {
-          id: uuidv4(),
-          name: encrypt(name, getSecretKey(), salt),
-          phone: encrypt(phone, getSecretKey(), salt),
-          table: encrypt(table, getSecretKey(), salt),
-          waiter: encrypt(waiter, getSecretKey(), salt),
-          visitedAt: Date.now()
-        }
-        return db
-          .collection('places')
-          .doc(userId)
-          .collection('visits')
-          .doc(visit.id)
-          .set(visit)
-          .then(() => {
-            textPhone.value = ''
-            textName.value = ''
-            textTable.value = ''
-            textWaiter.value = ''
-          })
+    let secretKey = getSecretKey()
+    let visit = {
+      id: uuidv4(),
+      name: encrypt(name, secretKey),
+      phone: encrypt(phone, secretKey),
+      table: encrypt(table, secretKey),
+      waiter: encrypt(waiter, secretKey),
+      visitedAt: Date.now()
+    }
+    return db
+      .collection('places')
+      .doc(userId)
+      .collection('visits')
+      .doc(visit.id)
+      .set(visit)
+      .then(() => {
+        textPhone.value = ''
+        textName.value = ''
+        textTable.value = ''
+        textWaiter.value = ''
       })
       .catch(error =>
         console.error(error.message)
@@ -214,34 +213,31 @@
   }
 
   function loadVisits(db, userId) {
-    return getSalt(db, userId).then(salt => {
-      return db
-        .collection('places')
-        .doc(userId)
-        .collection('visits')
-        .onSnapshot(querySnapshot => {
-          var visits = []
-          querySnapshot.forEach(doc => {
-            visits.push(mapVisit(doc, salt))
-          })
-          currentData = new Set(visits)
-          visitsTable.setData(visits)
-        }, error => {
-          console.error(error.message)
+    return db
+      .collection('places')
+      .doc(userId)
+      .collection('visits')
+      .onSnapshot(querySnapshot => {
+        var visits = []
+        querySnapshot.forEach(doc => {
+          visits.push(mapVisit(doc))
         })
-    }).catch(error => {
-      consoele.error(error.message)
-    })
+        currentData = new Set(visits)
+        visitsTable.setData(visits)
+      }, error => {
+        console.error(error.message)
+      })
   }
 
-  function mapVisit(doc, salt) {
+  function mapVisit(doc) {
     let docData = doc.data()
+    let secretKey = getSecretKey()
     return {
       id: doc.id,
-      name: docData.name ? decrypt(docData.name, getSecretKey(), salt) : '',
-      phone: docData.phone ? decrypt(docData.phone, getSecretKey(), salt) : '',
-      table: docData.table ? decrypt(docData.table, getSecretKey(), salt) : '',
-      waiter: docData.waiter ? decrypt(docData.waiter, getSecretKey(), salt) : '',
+      name: docData.name ? decrypt(docData.name, secretKey) : '',
+      phone: docData.phone ? decrypt(docData.phone, secretKey) : '',
+      table: docData.table ? decrypt(docData.table, secretKey) : '',
+      waiter: docData.waiter ? decrypt(docData.waiter, secretKey) : '',
       visitedAt: docData.visitedAt ? docData.visitedAt : ''
     }
   }
