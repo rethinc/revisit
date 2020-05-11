@@ -11,4 +11,6 @@
     <string name="show_secret_key">Passwort anzeigen</string>
     <string name="delete_key">Passwort löschen</string>
     <string name="password_error">Es wurde bereits ein Passwort gesetzt, welches nicht diesem Passwort entspricht.</string>
+    <string name="table">Tisch</string>
+    <string name="waiter">Kellner</string>
 </resources>

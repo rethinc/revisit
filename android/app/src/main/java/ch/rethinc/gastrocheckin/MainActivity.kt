@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var visitRepository: VisitRepository
 
+    private lateinit var additionalInformationRepository: AdditionalInformationRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,6 +61,8 @@ class MainActivity : AppCompatActivity() {
             firebaseUser,
             GastroCheckinEncryptor.createInstance(this, firebaseUser)
         )
+
+        additionalInformationRepository = AdditionalInformationRepositorySharedPreferences(this)
     }
 
     override fun onResume() {
@@ -130,32 +134,51 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun qrCodeScanned(qrCodeValue: String) {
+        introMessageContainer.visibility = GONE
         val person = Person.fromJson(qrCodeValue)
         if (person != null) {
+            showPendingMessage("${person.name}\n${person.phone}")
+            additionalInformationForm.visibility = VISIBLE
+            save.visibility = VISIBLE
+            loadAdditionalInformation()
+            save.setOnClickListener {
+                val newAdditionalInformation = AdditionalInformation(
+                    table = table.text.toString(),
+                    waiter = waiter.text.toString()
+                )
+                additionalInformationRepository.save(newAdditionalInformation)
+                val visit = Visit.from(person, newAdditionalInformation)
+                additionalInformationForm.visibility = GONE
+                saveVisit(visit)
+            }
 
-            name.text = person.name
-            phone.text = person.phone
-            contentContainer.visibility = VISIBLE
-            val visit = Visit.fromPerson(person)
-            visitRepository.save(visit)
-                .observe(this, Observer { result ->
-                    if (result.isSuccess) {
-                        showSuccessMessage()
-                    } else {
-                        Log.e(
-                            MainActivity::class.java.name,
-                            "Error while saving visit",
-                            result.exceptionOrNull()
-                        )
-                        showErrorMessage()
-                    }
-                })
         } else {
             showErrorMessage()
         }
+    }
 
-        scanNext.visibility = VISIBLE
-        introMessageContainer.visibility = GONE
+    private fun loadAdditionalInformation() {
+        val existingAdditionalInformation = additionalInformationRepository.get()
+        table.setText(existingAdditionalInformation.table)
+        waiter.setText(existingAdditionalInformation.waiter)
+    }
+
+    private fun saveVisit(visit: Visit) {
+        visitRepository.save(visit)
+            .observe(this, Observer { result ->
+                if (result.isSuccess) {
+                    showSuccessMessage()
+                } else {
+                    Log.e(
+                        MainActivity::class.java.name,
+                        "Error while saving visit",
+                        result.exceptionOrNull()
+                    )
+                    showErrorMessage()
+                }
+                scanNext.visibility = VISIBLE
+                save.visibility = GONE
+            })
     }
 
     private fun IntArray.isPermissionGranted(): Boolean =
@@ -164,9 +187,15 @@ class MainActivity : AppCompatActivity() {
     private fun startScanner() {
         qrCodeScanner.startScanning()
         hideMessage()
-        contentContainer.visibility = GONE
+        additionalInformationForm.visibility = GONE
         scanNext.visibility = GONE
         introMessageContainer.visibility = VISIBLE
+    }
+
+    private fun showPendingMessage(message: String) {
+        scanMessage.text = message
+        scanMessage.visibility = VISIBLE
+        scanMessage.setBackgroundColor(getColor(R.color.coloWarningTransparent))
     }
 
     private fun showSuccessMessage() {
