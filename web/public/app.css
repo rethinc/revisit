@@ -127,7 +127,6 @@ form > * {
   font-size: 18px;
   font-weight: 400;
   color: #132C45;
-  background-color: #ffffff;
   margin-bottom: 12px;
 }
 
@@ -175,4 +174,90 @@ form > * {
 
 .visitors {
   margin: 24px 0;
+}
+
+.section {
+  flex: 1 1 50%;
+  width: 90%;
+  padding: 1vh 4vw;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+
+.help-link {
+  position: relative;
+  font-size: 1em;
+  text-decoration: none;
+  color: #132C45;
+  border-bottom: #50E3C2;
+}
+
+.help-link:after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #48CCAE;
+}
+
+.help {
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding: 20px 2vh;
+}
+
+.help:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+#help-modal {
+  display: flex;
+}
+
+.help-overlay {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay-content {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 10px 20px;
+}
+
+.overlay-header {
+  flex: 0 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 20px;
+  background-color: #F5F5F5;
+}
+
+
+
+p {
+  font-weight: 300;
+  font: ;ont-size: 1em;
 }

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>gastro checkin</title>
-
   <link type="text/css" rel="stylesheet" href="app.css"/>
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -21,7 +20,7 @@
 <body>
   <div class="navbar">
     <div class="navbar">
-      <a href="#/" class="navbar-logo-link">
+      <a href="#" class="navbar-logo-link">
         <img class="navbar-logo" src="assets/svg/logo.svg" alt="gastro checkin logo"/>
       </a>
     </div>
@@ -41,6 +40,33 @@
       </form>
     </div>
   </div>
+  <div class="section">
+    <a href="#help-modal" class="help-link">So funktionierts</a>
+  </div>
+  <div id="help-modal" class="help">
+    <div class="help-overlay">
+      <div class="overlay-header">
+        <h2 class="form-title">So funktionierts</h2>
+        <a href="#" class="help-close">
+          <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen"/>
+        </a>
+      </div>
+      <div class="overlay-content">
+        <p>Aufgrund von COVID-19 sollen gemäss Empfehlung des Bundes alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste zu registrieren. Dies soll das tracken von Kontakten im Falle einer COVID-19 Erkrankung eines Gastes vereinfachen. <br><br>
+
+    Diese Applikation soll die Gastrobetriebe dabei unterstützen, dies auf einfache und sichere Art zu machen.
+        </p>
+        <h2class="form-title">Ablauf</h2>
+        <p> Ein Gastrobetrieb registriert sich auf der Platform und lädt eine App auf sein Smartphone und loggt sich ein.
+          Der Kunde geht mit seinem Mobiltelefon auf eine Webseite und gibt seine Daten (Namen, Telefonnummer) an. Die Webseite generiert aus diesen Daten einen QRCode. Der Kunde speichert den QRCode auf seinem Gerät. Es werden keine Daten sonst gesepeichert. Die Webseite dient nur der Generierung des QRCodes. <br><br>
+
+          Im Gastrobetrieb angekommen zeigt der Kunde seinen QRCode vor. Dieser wird mit der App des Gastrobetriebes gescannt und die Daten des Kunden sowie der Besuchszeitpunkt werden verschlüsselt auf einem Server abgelegt. Dabei wird das Passwort des Gastrobetriebes zum Verschlüsseln der Daten genutzt. Somit ist sichergestellt, dass nur der Gastrobetrieb Zugang zu den Daten hat. <br><br>
+
+    Über eine Weboberfläche kann sich der Gastrobetrieb einloggen und sich die Liste der Gäste ansehen. Alternativ kann er auf dieser Oberfläche auch Gäste manuell eintragen. <br><br>
+        </p>
+      </div>
+  </div>
+</div>
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/qrcode.base.js"></script>
