@@ -136,6 +136,7 @@ form > * {
 
 .content-image{
   width: 100%;
+  max-width: 375px;
   height: auto;
   margin: 4vh 0 2vh 0;
 }
