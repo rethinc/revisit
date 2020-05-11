@@ -1,4 +1,9 @@
 (function () {
+  if (typeof (Storage) == 'undefined') {
+    alert('Sorry, dein Browser wird nicht unterstützt.')
+    return
+  }
+  const localstorage = window.localStorage
 
   const auth = firebase.auth()
   const db = firebase.firestore()
@@ -6,10 +11,15 @@
 
   const containerSignIn = document.getElementById('containerSignIn')
   const containerSignedIn = document.getElementById('containerSignedIn')
+  const containerSecretKey = document.getElementById('containerSecretKey')
   const buttonSignOut = document.getElementById('buttonSignOut')
   const textName = document.getElementById('textName')
   const textPhone = document.getElementById('textPhone')
   const buttonCreate = document.getElementById('buttonCreate')
+  const buttonSecretKey = document.getElementById('buttonSecretKey')
+  const textSecretKey = document.getElementById('textSecretKey')
+  const buttonSignOutSecret = document.getElementById('buttonSignOutSecret')
+  const messageSecretError = document.getElementById('messageSecretError')
 
   var currentUser = null
 
@@ -41,7 +51,7 @@
             deleteVisit(cell.getRow().getData().id, currentUser.uid)
           }
         },
-        headerSort:false
+        headerSort: false
       }
     ]
   })
@@ -51,16 +61,55 @@
   auth.onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       currentUser = firebaseUser
-      showSignedInView(firebaseUser)
+      let secretKey = getSecretKey()
+      console.log('secret key', secretKey)
+      if (secretKey) {
+        showSignedInView(firebaseUser)
+      } else {
+        showPasswordView(firebaseUser)
+      }
     } else {
       currentUser = null
       showSignInView()
     }
   })
 
-  function showSignedInView(firebaseUser) {
+  function showPasswordView(firebaseUser) {
+    containerSecretKey.classList.remove('hide')
     containerSignIn.classList.add('hide')
+    containerSignedIn.classList.add('hide')
+
+    buttonSignOutSecret.addEventListener('click', signOut)
+
+    buttonSecretKey.addEventListener('click', e => {
+      messageSecretError.classList.add('hide')
+      getOrCreateSalt(db, firebaseUser.uid)
+        .then(salt => {
+          let secretKey = textSecretKey.value
+          if (!secretKey || secretKey === '') {
+            messageSecretError.classList.remove('hide')
+          }
+          isSecretKeyValid(db, firebaseUser.uid, secretKey, salt)
+            .then(isValid => {
+              if (!isValid) {
+                messageSecretError.classList.remove('hide')
+              } else {
+                saveSecretKey(textSecretKey.value)
+                showSignedInView(firebaseUser)
+              }
+            })
+        })
+        .catch(error => {
+          console.error(error)
+          messageSecretError.classList.remove('hide')
+        })
+    })
+  }
+
+  function showSignedInView(firebaseUser) {
     containerSignedIn.classList.remove('hide')
+    containerSignIn.classList.add('hide')
+    containerSecretKey.classList.add('hide')
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = loadVisits(db, firebaseUser.uid)
@@ -69,6 +118,7 @@
   function showSignInView() {
     containerSignIn.classList.remove('hide')
     containerSignedIn.classList.add('hide')
+    containerSecretKey.classList.add('hide')
     buttonCreate.removeEventListener('click', createVisitFromForm)
     if (loadVisitsUnsubscribe) {
       loadVisitsUnsubscribe()
@@ -98,6 +148,7 @@
   }
 
   function signOut() {
+    removeSecretKey()
     auth.signOut()
   }
 
@@ -154,7 +205,96 @@
         currentData = new Set(visits)
         visitsTable.setData(visits)
       }, error => {
-        console.log(error.message)
+        console.error(error.message)
       })
+  }
+
+  function getOrCreateSalt(db, userId) {
+    return getSalt(db, userId)
+      .then((salt) => {
+        if (salt) {
+          return salt
+        } else {
+          var newSalt = createSaltBase64()
+          return storeSalt(db, userId, newSalt)
+            .then(i => {
+              return newSalt
+            })
+        }
+      }).catch(error => {
+          console.error('Could not get or create salt', error)
+        }
+      )
+  }
+
+  function getSalt(db, userId) {
+    return db
+      .collection('places')
+      .doc(userId)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return doc.data()['salt']
+        } else {
+          return null
+        }
+      })
+      .catch(error => {
+        console.error('Could not get salt', error)
+      })
+  }
+
+  function storeSalt(db, userId, salt) {
+    return db
+      .collection('places')
+      .doc(userId)
+      .set({salt: salt}, {merge: true})
+      .catch(error => {
+        console.error('Could not store salt', error)
+      })
+  }
+
+  function isSecretKeyValid(db, userId, password, salt) {
+    let challenge = 'This is the challenge!'
+    return db
+      .collection('places')
+      .doc(userId)
+      .get()
+      .then(doc => {
+        let storedChallenge = doc.data()['challenge'];
+        if (storedChallenge) {
+          return decrypt(storedChallenge, password, salt) === challenge
+        } else {
+          return saveEncryptedChallenge(db, userId, password, salt, challenge)
+            .then(e => {
+              return true
+            })
+            .catch(error => {
+              console.log('Could not store encrypted Challenge', error)
+            })
+        }
+      }).catch(error => {
+        console.error('Could not get challenge', error)
+      })
+  }
+
+  function saveEncryptedChallenge(db, userId, password, salt, challenge) {
+    let encryptedChallenge = encrypt(challenge, password, salt)
+    return db
+      .collection('places')
+      .doc(userId)
+      .set({challenge: encryptedChallenge}, {merge: true})
+  }
+
+  function saveSecretKey(secretKey) {
+    localstorage.setItem('secretKey', secretKey)
+  }
+
+  function getSecretKey() {
+    return localstorage.getItem('secretKey')
+  }
+
+  function removeSecretKey() {
+    localstorage.removeItem('secretKey')
   }
 }())
