@@ -157,7 +157,4 @@
         console.log(error.message)
       })
   }
-
-  console.log(decrypt("iw6WgfTJGC81wIYsQp26FOV/04miNYRo5PSqMFlNOKU=", getKey()));
-
 }())
