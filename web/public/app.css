@@ -10,11 +10,18 @@ html {
 body {
   padding-top: 70px;
   margin: 0;
-  font-family: "Fira Sans", sans-serif;
+  font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
   background-color: #F5F5F5;
   display: flex;
   flex-direction: column;
+}
+
+p {
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  line-height: 1.5;
 }
 
 form > * {
@@ -68,7 +75,7 @@ form > * {
 }
 
 .navbar-button {
-  font-weight: 500;
+  font-weight: 400;
   background-color: #132C45;
   border: none;
   box-shadow: none;
@@ -155,7 +162,7 @@ form > * {
 }
 
 .form-button {
-  font-weight: 500;
+  font-weight: 400;
   background-color: #50E3C2;
   color: #fff;
   padding: 12px 20px;
@@ -253,11 +260,4 @@ form > * {
   align-items: center;
   max-height: 20px;
   background-color: #F5F5F5;
-}
-
-
-
-p {
-  font-weight: 300;
-  font: ;ont-size: 1em;
 }
