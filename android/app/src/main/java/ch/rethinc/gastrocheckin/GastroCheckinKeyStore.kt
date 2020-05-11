@@ -1,6 +1,8 @@
 package ch.rethinc.gastrocheckin
 
 import android.content.Context
+import android.util.Base64
+import android.util.Base64.NO_WRAP
 import ch.rethinc.gastrocheckin.secretstore.SecretsStore
 import ch.rethinc.store.EncryptedSharedPreferencesStore
 
@@ -9,7 +11,8 @@ class GastroCheckinKeyStore(
 ) {
 
     companion object {
-        private const val key = "ch.rethinc.gastrocheckin.secretstore.key"
+        private const val secretKeyKey = "ch.rethinc.gastrocheckin.secretstore.key"
+        private const val userPasswordKey = "ch.rethinc.gastrocheckin.secretstore.password"
 
         private var instance: GastroCheckinKeyStore? = null
 
@@ -33,13 +36,26 @@ class GastroCheckinKeyStore(
         }
     }
 
-    var secretKey: String?
-        get() = secretsStore.secretForKey(key)
+    var userPasssword: String?
+        get() = secretsStore.secretForKey(userPasswordKey)
         set(value) {
             if (value != null) {
-                secretsStore.storeSecretForKey(key, value)
+                secretsStore.storeSecretForKey(userPasswordKey, value)
             } else {
-                secretsStore.removeSecretForKey(key)
+                secretsStore.removeSecretForKey(userPasswordKey)
+            }
+        }
+
+    var secretKey: ByteArray?
+        get() {
+            val secretKey = secretsStore.secretForKey(secretKeyKey) ?: return null
+            return Base64.decode(secretKey, NO_WRAP)
+        }
+        set(value) {
+            if (value != null) {
+                secretsStore.storeSecretForKey(secretKeyKey, Base64.encodeToString(value, NO_WRAP))
+            } else {
+                secretsStore.removeSecretForKey(secretKeyKey)
             }
         }
 

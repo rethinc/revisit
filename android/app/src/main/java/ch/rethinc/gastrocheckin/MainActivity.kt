@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         visitRepository = VisitRepositoryFirebase(
             FirebaseFirestore.getInstance(),
             firebaseUser,
-            GastroCheckinEncryptor.createInstance(this, firebaseUser)
+            GastroCheckinEncryptor.createInstance(this)
         )
 
         additionalInformationRepository = AdditionalInformationRepositorySharedPreferences(this)

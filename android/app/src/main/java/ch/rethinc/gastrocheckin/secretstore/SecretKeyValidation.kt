@@ -1,5 +1,6 @@
 package ch.rethinc.gastrocheckin.secretstore
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -10,7 +11,7 @@ import com.google.firebase.firestore.SetOptions
 class SecretKeyValidation(
     private val firestore: FirebaseFirestore,
     private val firebaseUser: FirebaseUser,
-    private val gastroCheckinEncryptor: GastroCheckinEncryptor
+    private val encryptor: GastroCheckinEncryptor
 
 ) {
 
@@ -19,43 +20,43 @@ class SecretKeyValidation(
         private const val challengeField = "challenge"
     }
 
-    fun isValid(secretKey: String): LiveData<Boolean> =
+    fun isValid(secretKey: ByteArray): LiveData<Boolean> =
         Transformations.switchMap(readChallenge()) { storedChallenge ->
             if (storedChallenge == null) {
-                Transformations.map(saveChallengeEncrypted(secretKey)) { result ->
-                    result.isSuccess
-                }
+                saveChallengeEncrypted(secretKey)
             } else {
-                Transformations.map(gastroCheckinEncryptor.decrypt(storedChallenge, secretKey)) { result ->
-                    val decryptedChallenge = result.getOrNull()
-                    decryptedChallenge == challenge
-                }
+                val decryptedChallenge = encryptor.decrypt(storedChallenge, secretKey)
+                singleValue(decryptedChallenge == challenge)
             }
         }
 
-    fun saveChallengeEncrypted(secretKey: String): LiveData<Result<Unit>> =
-        Transformations.switchMap(gastroCheckinEncryptor.encrypt(challenge, secretKey)) { result ->
-            val encryptedChallenge = result.getOrNull()
-            if (encryptedChallenge == null) {
-                val liveData = MutableLiveData<Result<Unit>>()
-                liveData.postValue(Result.failure(result.exceptionOrNull() ?: Exception()))
-                liveData
-            } else {
-                save(encryptedChallenge)
-            }
+    fun saveChallengeEncrypted(secretKey: ByteArray): LiveData<Boolean> {
+        val encryptedChallenge = encryptor.encrypt(challenge, secretKey)
+        if (encryptedChallenge == null) {
+            return singleValue(false)
+        } else {
+            return save(encryptedChallenge)
         }
+    }
 
-    private fun save(encryptedChallenge: String): LiveData<Result<Unit>> {
-        val livedata = MutableLiveData<Result<Unit>>()
+    private fun singleValue(value: Boolean): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+        liveData.postValue(value)
+        return liveData
+    }
+
+    private fun save(encryptedChallenge: String): LiveData<Boolean> {
+        val livedata = MutableLiveData<Boolean>()
         firestore
             .collection("places")
             .document(firebaseUser.uid)
             .set(mapOf(challengeField to encryptedChallenge), SetOptions.merge())
             .addOnSuccessListener {
-                livedata.postValue(Result.success(Unit))
+                livedata.postValue(true)
             }
             .addOnFailureListener { e ->
-                livedata.postValue(Result.failure(e))
+                Log.e(SecretKeyValidation::class.java.name, "Could not save challenge", e)
+                livedata.postValue(false)
             }
         return livedata
     }

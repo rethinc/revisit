@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gastro Checkin</string>
+    <string name="app_name">re:visit</string>
     <string name="scan_barcode_message">Scanne den Barcode der Kunden</string>
     <string name="scanNext">Nächsten Barcode scannen</string>
     <string name="ok">OK</string>
