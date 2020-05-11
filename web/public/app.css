@@ -74,6 +74,15 @@ form > * {
   align-content: center;
 }
 
+.back-home-link {
+  display: flex;
+  justify-items: center;
+}
+
+.home-link-arrow {
+  margin-right: 8px;
+}
+
 .navbar-button {
   font-weight: 400;
   background-color: #132C45;
@@ -114,9 +123,6 @@ form > * {
 .qr-code-image {
   width: 100%;
   padding: 10px;
-  border: 2px solid #48CCAE;
-  background-color: #ffffff;
-  border-radius: 4px;
 }
 
 .qr-code-image img {
