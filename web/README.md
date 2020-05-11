@@ -1,4 +1,4 @@
-# Gastro Checkin
+# re:visit
 
 ## Setup Firebase CLI
 ```
