@@ -13,6 +13,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import ch.rethinc.gastrocheckin.secretstore.GastroCheckinEncryptor
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,7 +54,11 @@ class MainActivity : AppCompatActivity() {
 
         keyStore = GastroCheckinKeyStore.getInstance(this)
 
-        visitRepository = VisitRepositoryFirebase(FirebaseFirestore.getInstance(), firebaseUser)
+        visitRepository = VisitRepositoryFirebase(
+            FirebaseFirestore.getInstance(),
+            firebaseUser,
+            GastroCheckinEncryptor.createInstance(this, firebaseUser)
+        )
     }
 
     override fun onResume() {
@@ -132,13 +138,18 @@ class MainActivity : AppCompatActivity() {
             contentContainer.visibility = VISIBLE
             val visit = Visit.fromPerson(person)
             visitRepository.save(visit)
-                .addOnSuccessListener {
-                    showSuccessMessage()
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(MainActivity::class.java.name, "Error while saving visit", exception)
-                    showErrorMessage()
-                }
+                .observe(this, Observer { result ->
+                    if (result.isSuccess) {
+                        showSuccessMessage()
+                    } else {
+                        Log.e(
+                            MainActivity::class.java.name,
+                            "Error while saving visit",
+                            result.exceptionOrNull()
+                        )
+                        showErrorMessage()
+                    }
+                })
         } else {
             showErrorMessage()
         }
