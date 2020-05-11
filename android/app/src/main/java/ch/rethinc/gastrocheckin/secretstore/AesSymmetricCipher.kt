@@ -2,6 +2,7 @@ package ch.rethinc.store
 
 import android.util.Base64
 import android.util.Base64.DEFAULT
+import android.util.Base64.NO_WRAP
 import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.Cipher.DECRYPT_MODE
@@ -23,14 +24,14 @@ class AesSymmetricCipher(
             key = symmetricKeyProvider.getOrCreateSecretKey(),
             mode = ENCRYPT_MODE
         )
-        return Base64.encodeToString(encodedBytes, DEFAULT)
+        return Base64.encodeToString(encodedBytes, NO_WRAP)
     }
 
     override fun decrypt(value: String?): String? {
         if (value == null) {
             return null
         }
-        val encryptedDecodedData = Base64.decode(value, DEFAULT)
+        val encryptedDecodedData = Base64.decode(value, NO_WRAP)
         val decodedBytes = doFinalCipher(
             input = encryptedDecodedData,
             key = symmetricKeyProvider.getOrCreateSecretKey(),

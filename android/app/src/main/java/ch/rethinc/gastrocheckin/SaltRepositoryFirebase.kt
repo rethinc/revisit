@@ -1,6 +1,7 @@
 package ch.rethinc.gastrocheckin
 
 import android.util.Base64
+import android.util.Base64.NO_WRAP
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,11 +33,11 @@ class SaltRepositoryFirebase(
             .addOnSuccessListener {
                 val saltRaw = it.getSalt()
                 if (saltRaw != null) {
-                    liveData.postValue(Result.success(Base64.decode(saltRaw, 0)))
+                    liveData.postValue(Result.success(Base64.decode(saltRaw, NO_WRAP)))
                 } else {
                     val newSalt = generateSalt()
                     userDocument
-                        .set(mapOf(saltField to Base64.encodeToString(newSalt, 0)), SetOptions.merge())
+                        .set(mapOf(saltField to Base64.encodeToString(newSalt, NO_WRAP)), SetOptions.merge())
                         .addOnSuccessListener {
                             liveData.postValue(Result.success(newSalt))
                         }

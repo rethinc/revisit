@@ -1,8 +1,8 @@
 package ch.rethinc.gastrocheckin
 
-import com.google.android.gms.tasks.Task
+import androidx.lifecycle.LiveData
 
 interface VisitRepository {
 
-    fun save(visit: Visit): Task<Void>
+    fun save(visit: Visit): LiveData<Result<Unit>>
 }
