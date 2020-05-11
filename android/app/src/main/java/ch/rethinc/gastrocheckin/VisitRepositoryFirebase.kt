@@ -37,11 +37,17 @@ class VisitRepositoryFirebase(
 
     private fun encrypt(visit: Visit): LiveData<Visit> =
         Transformations.switchMap(encryptor.encrypt(visit.name)) { encryptedNameResult ->
-            Transformations.map(encryptor.encrypt(visit.phone)) { encryptedPhoneResult ->
-                visit.copy(
-                    name = encryptedNameResult.getOrThrow(),
-                    phone = encryptedPhoneResult.getOrThrow()
-                )
+            Transformations.switchMap(encryptor.encrypt(visit.phone)) { encryptedPhoneResult ->
+                Transformations.switchMap(encryptor.encrypt(visit.table)) { encryptedTableResult ->
+                    Transformations.map(encryptor.encrypt(visit.waiter)) { encryptedWaiterResult ->
+                        visit.copy(
+                            name = encryptedNameResult.getOrThrow(),
+                            phone = encryptedPhoneResult.getOrThrow(),
+                            table = encryptedTableResult.getOrThrow(),
+                            waiter = encryptedWaiterResult.getOrThrow()
+                        )
+                    }
+                }
             }
         }
 

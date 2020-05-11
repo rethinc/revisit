@@ -15,6 +15,8 @@
   const buttonSignOut = document.getElementById('buttonSignOut')
   const textName = document.getElementById('textName')
   const textPhone = document.getElementById('textPhone')
+  const textTable = document.getElementById('textTable')
+  const textWaiter = document.getElementById('textWaiter')
   const buttonCreate = document.getElementById('buttonCreate')
   const buttonSecretKey = document.getElementById('buttonSecretKey')
   const textSecretKey = document.getElementById('textSecretKey')
@@ -42,6 +44,8 @@
           return new Date(cell.getValue()).format('d.m.Y H:i')
         }
       },
+      {title: 'Tisch', field: 'table'},
+      {title: 'Bedienung', field: 'waiter'},
       {
         formatter: deleteIcon,
         width: 44,
@@ -145,7 +149,7 @@
 
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
-      createVisit(textName.value, textPhone.value, currentUser.uid)
+      createVisit(textName.value, textPhone.value, textTable.value, textWaiter.value, currentUser.uid)
     }
   }
 
@@ -154,14 +158,15 @@
     auth.signOut()
   }
 
-  function createVisit(name, phone, userId) {
-    let secretKey = getSecretKey()
+  function createVisit(name, phone, table, waiter, userId) {
     return getSalt(db, userId)
       .then(salt => {
         let visit = {
           id: uuidv4(),
-          name: encrypt(name, secretKey, salt),
-          phone: encrypt(phone, secretKey, salt),
+          name: encrypt(name, getSecretKey(), salt),
+          phone: encrypt(phone, getSecretKey(), salt),
+          table: encrypt(table, getSecretKey(), salt),
+          waiter: encrypt(waiter, getSecretKey(), salt),
           visitedAt: Date.now()
         }
         return db
@@ -173,6 +178,8 @@
           .then(() => {
             textPhone.value = ''
             textName.value = ''
+            textTable.value = ''
+            textWaiter.value = ''
           })
       })
       .catch(error =>
@@ -201,13 +208,7 @@
         .onSnapshot(querySnapshot => {
           var visits = []
           querySnapshot.forEach(doc => {
-            const docData = doc.data()
-            visits.push({
-              id: doc.id,
-              name: decrypt(docData.name, getSecretKey(), salt),
-              phone: decrypt(docData.phone, getSecretKey(), salt),
-              visitedAt: docData.visitedAt
-            })
+            visits.push(mapVisit(doc, salt))
           })
           currentData = new Set(visits)
           visitsTable.setData(visits)
@@ -217,6 +218,18 @@
     }).catch(error => {
       consoele.error(error.message)
     })
+  }
+
+  function mapVisit(doc, salt) {
+    let docData = doc.data()
+    return {
+      id: doc.id,
+      name: docData.name ? decrypt(docData.name, getSecretKey(), salt) : '',
+      phone: docData.phone ? decrypt(docData.phone, getSecretKey(), salt) : '',
+      table: docData.table ? decrypt(docData.table, getSecretKey(), salt) : '',
+      waiter: docData.waiter ? decrypt(docData.waiter, getSecretKey(), salt) : '',
+      visitedAt: docData.visitedAt ? docData.visitedAt : ''
+    }
   }
 
   function getOrCreateSalt(db, userId) {
@@ -271,7 +284,7 @@
       .doc(userId)
       .get()
       .then(doc => {
-        let storedChallenge = doc.data()['challenge'];
+        let storedChallenge = doc.data()['challenge']
         if (storedChallenge) {
           let decrypted = decrypt(storedChallenge, password, salt)
           return decrypted === challenge
