@@ -2,12 +2,14 @@
 <html>
   <head>
     <title>re:visit</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
     <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="style/app.css"/>
     <link type="text/css" rel="stylesheet" href="style/tabulator.css"/>
+    <link type="text/css" rel="stylesheet" href="style/navigation.css"/>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -22,19 +24,61 @@
   </head>
   <body>
     <div id="containerSignIn" class="content hide">
-        <div class="navbar">
-            <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visit logo"/>
-        </div>
+<nav role="navigation" class="navbar">
+    <div class="navbar-items">
+      <div></div>
+      <a href="/web/public/index.html" class="navbar-logo-link">
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
+      </a>
+      <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+          <div class="menu-list">
+            <img class="menu-logo" src="assets/svg/logo-sign.svg" alt="re:visist logo"/>
+            <a class="menu-link" href="/web/public/restaurant.html">Für Restaurants</a>
+            <a class="menu-link" href="#">Über Das Projekt (Coming soon)</a>
+            <a class="menu-link" href="/web/public/privacy.html">Datenschutzbestimmung</a>
+            <a class="menu-link" href="#">Impressum (coming soon)</a>
+            <div>
+              <a class="menu-button" href="/web/public/index.html" >QR-Code generieren</a>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
     </div>
     <div id="containerSecretKey" class="content hide">
-        <div class="navbar">
-            <div class="navbar-items">
-                <a href="#" class="navbar-logo-link">
-                    <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visit logo"/>
-                </a>
-                <button id="buttonSignOutSecret" class="navbar-button">Abmelden</button>
+        <nav role="navigation" class="navbar">
+    <div class="navbar-items">
+      <div></div>
+      <a href="/web/public/index.html" class="navbar-logo-link">
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
+      </a>
+      <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+          <div class="menu-list">
+            <img class="menu-logo" src="assets/svg/logo-sign.svg" alt="re:visist logo"/>
+            <a class="menu-link" href="/web/public/restaurant.html">Für Restaurants</a>
+            <a class="menu-link" href="#">Über Das Projekt (Coming soon)</a>
+            <a class="menu-link" href="/web/public/privacy.html">Datenschutzbestimmung</a>
+            <a class="menu-link" href="#">Impressum (coming soon)</a>
+            <a class="menu-link" href="/web/public/index.html" >QR-Code generieren</a>
+            <div>
+              <button id="buttonSignOutSecret" class="menu-button">Abmelden</button>
             </div>
-        </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
       <div class="main-content">
         <div id="formEnterSecretKey" class="form">
             <h2 class="form-title">Passwort zum Verschl&uuml;sseln eingeben</h2>
@@ -46,14 +90,35 @@
       </div>
     </div>
     <div id="containerSignedIn">
-        <div class="navbar">
-            <div class="navbar-items">
-                <a href="#" class="navbar-logo-link">
-                    <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visit logo"/>
-                </a>
-                <button id="buttonSignOut" class="navbar-button">Abmelden</button>
+      <nav role="navigation" class="navbar">
+    <div class="navbar-items">
+      <div></div>
+      <a href="/web/public/index.html" class="navbar-logo-link">
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
+      </a>
+      <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+          <div class="menu-list">
+            <img class="menu-logo" src="assets/svg/logo-sign.svg" alt="re:visist logo"/>
+            <a class="menu-link" href="/web/public/restaurant.html">Für Restaurants</a>
+            <a class="menu-link" href="#">Über Das Projekt (Coming soon)</a>
+            <a class="menu-link" href="/web/public/privacy.html">Datenschutzbestimmung</a>
+            <a class="menu-link" href="#">Impressum (coming soon)</a>
+            <a class="menu-link" href="/web/public/index.html" >QR-Code generieren</a>
+
+            <div>
+              <button id="buttonSignOut" class="menu-button">Abmelden</button>
             </div>
-        </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
         <div class="main-content">
             <div id="containerCreate" class="form">
                 <h2 class="form-title">Besuch erfassen</h2>
