@@ -5,29 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>re:visit</title>
   <link type="text/css" rel="stylesheet" href="style/app.css"/>
+  <link type="text/css" rel="stylesheet" href="style/navigation.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
+
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
   <link rel="manifest" href="favicon/site.webmanifest">
   <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
   <link rel="shortcut icon" href="favicon/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="re:visit">
-  <meta name="application-name" content="re:visit">
+
+  <meta name="apple-mobile-web-app-title" content="gastro checkin">
+  <meta name="application-name" content="gastro checkin">
   <meta name="msapplication-TileColor" content="#132c45">
   <meta name="msapplication-config" content="favicon/browserconfig.xml">
   <meta name="theme-color" content="#132c45">
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="navbar">
+
+  <nav role="navigation" class="navbar">
     <div class="navbar-items">
       <div></div>
       <a href="#" class="navbar-logo-link">
-        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visit logo"/>
+        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
       </a>
-      <div></div>
+      <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        <ul id="menu">
+          <a href="#"><li>Für Restaurants</li></a>
+          <a href="#"><li>Über Das Projekt</li></a>
+          <a href="#"><li>Datenschutzbestimmung</li></a>
+          <a href="#"><li>Impressum</li></a>
+        </ul>
+      </div>
     </div>
-  </div>
+  </nav>
+
   <div class="qr-code">
     <div id="qrCode" class="qr-code-image"></div>
   </div>
