@@ -52,7 +52,10 @@
           }
         },
         headerSort: false
-      }
+      },
+    ],
+    initialSort:[
+      {column:"visitedAt", dir:"desc"}
     ]
   })
 
