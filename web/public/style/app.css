@@ -285,6 +285,10 @@ input[type=text] {
   font-weight: 600;
 }
 
+.project-overview-link:hover {
+opacity: 0.8;
+}
+
 .project-overview-icon {
   margin-right: 10px;
 }
