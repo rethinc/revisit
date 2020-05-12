@@ -25,6 +25,7 @@ body {
   background-color: #50E3C2;
   height: 1px;
   border: none;
+  margin: 4vh 0;
 }
 
 p {
@@ -88,17 +89,6 @@ form > * {
   display: flex;
   justify-content: center;
   align-content: center;
-}
-
-.back-home-link {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  opacity: 1;
-}
-
-.back-home-link:hover {
-  opacity: 0.7;
 }
 
 .navbar-link {
@@ -286,6 +276,20 @@ input[type=text] {
   background-color: #48CCAE;
 }
 
+.project-overview-link {
+  display: flex;
+  text-decoration: none;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+  font-weight: 600;
+}
+
+.project-overview-icon {
+  margin-right: 10px;
+}
+
 .help {
   visibility: hidden;
   opacity: 0;
@@ -366,9 +370,23 @@ button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-butto
   display: flex;
   flex-direction: column;
   background-color: #fff;
-
 }
 
 .mdl-button--raised {
   box-shadow: none;
+}
+
+.overlay-content-column {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.overlay-content-column > * {
+  flex: 1 1 20%;
+  margin-right: 10px;
+}
+
+.overlay-content-column > *:last-child {
+  margin-right: 0;
 }
