@@ -3,6 +3,7 @@
 .tabulator {
     position: relative;
     background-color: #fff;
+    border: 2px solid #EEEEEE;
     border-radius: 4px;
     overflow: hidden;
     font-size: 1em;
@@ -146,6 +147,15 @@ svg.bi.bi-trash:hover {
 
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter svg {
     margin-top: 3px;
+}
+
+.tabulator-header-filter input {
+    margin: 10px 0;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #F7F7F7;
+    background-color: #F7F7F7;
+    padding: 12px;
 }
 
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input::-ms-clear {
@@ -694,9 +704,7 @@ svg.bi.bi-trash:hover {
 }
 
 .tabulator-row.tabulator-selectable:hover {
-    background-color: #50E3C2;
-    color: #fff;
-    cursor: pointer;
+    background-color: #F7F7F7;
 }
 
 .tabulator-row.tabulator-selected {
