@@ -20,7 +20,7 @@ svg.bi.bi-trash {
 }
 
 svg.bi.bi-trash:hover {
-    fill: #fff;
+    fill: #DE4B4B;
 }
 
 .tabulator[tabulator-layout="fitDataFill"] .tabulator-tableHolder .tabulator-table {
