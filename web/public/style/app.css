@@ -279,7 +279,6 @@ input[type=text] {
 .project-overview-link {
   display: flex;
   text-decoration: none;
-  margin: auto;
   text-align: center;
   justify-content: center;
   justify-items: center;
@@ -394,4 +393,9 @@ button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-butto
 
 .margin-bottom {
   margin-bottom: 20px;
+}
+
+.supporting-links {
+  display: flex;
+  justify-content: space-between;
 }
