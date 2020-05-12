@@ -391,3 +391,7 @@ button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-butto
 .overlay-content-column > *:last-child {
   margin-right: 0;
 }
+
+.margin-bottom {
+  margin-bottom: 20px;
+}

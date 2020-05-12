@@ -156,7 +156,6 @@
 
         <p> Bei Fragen oder Unklarheiten kannst du dich unter <a href="mailto:revisit@rethinc.ch" class="link">revisit@rethinc.ch</a> melden.</p>
 
-
       </div>
     </div>
   </div>
@@ -229,6 +228,10 @@
   </nav>
 
         <div class="main-content">
+          <a href="#install-guide-modal" class="project-overview-link margin-bottom">
+            <img class="project-overview-icon" src="assets/svg/help.svg" alt="re:visist logo"/>
+            <span class="link">App Installieren (ohne Google Play Store)</span>
+          </a>
             <div id="containerCreate" class="form">
                 <h2 class="form-title">Besuch erfassen</h2>
                 <input type="text" id="textName" placeholder="Name" class="form-field"/>
@@ -242,6 +245,39 @@
                 </div>
             </div>
         </div>
+
+      <div id="install-guide-modal" class="help">
+        <div class="help-overlay">
+          <div class="overlay-header">
+            <h2 class="overlay-header-title">App installieren</h2>
+            <a href="#" class="help-close">
+              <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen"/>
+            </a>
+          </div>
+          <div class="overlay-content">
+            <p class="intro">Die App ist aktuell bei Google im Review und wird danach im Google Play Store verfügbar sein. Damit in der zwischenzeit re:visit bereits eingesetzt werden kann, kann man die App manuell auf dem Smartphone installieren. so gehts!
+            </p>
+            <img class="content-image" src="assets/svg/guide-install-01.svg" alt="QR-Code erstellen"/>
+            <h2 class="form-title">1. revisit.ch/revisit.apk öffnen</h2>
+            <p>Öffne <a href="https://revisit.ch/revisit.apk" class="link">revisit.ch/revisit.apk</a> auf deinem Smartphone. Laden das APK auf dein Smartphone herunter.</p>
+
+            <img class="content-image" src="assets/svg/guide-install-02.svg" alt="QR-Code erstellen"/>
+            <h2 class="form-title">2. Installiere die App</h2>
+            <p>Installiere die App auf deinem Smartphone. <b> ACHTUNG: Da es sich um eine Manuelle Installation handelt, muss die Option "install anyway" ausgewählt werden, falls eine Entsprechende Meldung auftaucht.</b></p>
+
+            <img class="content-image" src="assets/svg/guide-install-03.svg" alt="QR-Code erstellen"/>
+            <h2 class="form-title">3. Mit Restaurant Login anmelden</h2>
+            <p>Melde dich nun in der App mit dem gleichen Restaurant Login an um die App verwenden zu können.</p>
+
+            <img class="content-image" src="assets/svg/guide-install-04.svg" alt="QR-Code erstellen"/>
+            <h2 class="form-title">4. Loslegen</h2>
+            <p>Fertig! Du kannst nun die QR-Codes, die deine Besucherinnen auf revisit.ch erstellen können, scannen und optional mit der Tisch Nr. und Kellner/in ergänzen.</p>
+
+          </div>
+        </div>
+      </div>
+
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
