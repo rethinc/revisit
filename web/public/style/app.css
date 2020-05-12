@@ -296,6 +296,7 @@ form > * {
   flex: 1 1 auto;
   overflow: auto;
   padding: 10px 20px;
+  text-align: center;
 }
 
 .overlay-header {
