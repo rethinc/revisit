@@ -16,6 +16,10 @@
         "destination": "/restaurant.html"
       },
       {
+        "source": "/datenschutz",
+        "destination": "/datenschutz.html"
+      },
+      {
         "source": "/privacy",
         "destination": "/privacy.html"
       },
