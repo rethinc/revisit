@@ -385,6 +385,7 @@ button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-butto
 .overlay-content-column > * {
   flex: 1 1 20%;
   margin-right: 10px;
+  min-width: 200px;
 }
 
 .overlay-content-column > *:last-child {
