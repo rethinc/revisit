@@ -345,3 +345,30 @@ input[type=text] {
   font-weight: 600;
   color: #132C45;
 }
+
+.firebaseui-container {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored {
+  background: #50E3C2;
+}
+
+.firebaseui-container.mdl-card {
+  box-shadow: none;
+  padding: 16px 20px 20px 20px;
+  border-radius: 4px;
+  border: 2px solid #50E3C2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+
+}
+
+.mdl-button--raised {
+  box-shadow: none;
+}
