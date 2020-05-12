@@ -5,8 +5,7 @@
     <string name="error">Fehler</string>
     <string name="logout">Ausloggen</string>
     <string name="intro_message">Scanne den QR-Code des Gastes um seinen Besuch zu registrieren.</string>
-    <string name="enter_secret_message">Gib einen geheimen Schlüssel ein, mit welchem deine Daten verschlüsselt werden. Nur wer dieses geheimen Schlüssel hat, hat Zugriff auf die Daten.\n
-        Bewahre ihn deshalb gut auf.</string>
+    <string name="enter_secret_message">Gib einen geheimen Schlüssel ein, mit welchem deine Daten verschlüsselt werden. Nur wer dieses geheimen Schlüssel hat, hat Zugriff auf die Daten. Bewahre ihn deshalb gut auf.</string>
     <string name="save">Speichern</string>
     <string name="show_secret_key">Geheimen Schlüssel anzeigen</string>
     <string name="delete_key">Geheimen Schlüssel löschen</string>
