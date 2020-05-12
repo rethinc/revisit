@@ -20,6 +20,10 @@
         "destination": "/privacy.html"
       },
       {
+        "source": "/impressum",
+        "destination": "/impressum.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
