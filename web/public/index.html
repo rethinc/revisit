@@ -57,7 +57,12 @@
   <div class="main-content">
     <div id="registrationForm">
       <form action="/" method="GET" class="form">
-        <h2 class="form-title">QR-Code erstellen</h2>
+        <div class="form-header">
+          <h2 class="form-title">QR-Code erstellen</h2>
+          <a href="#help-modal">
+            <img class="navbar-logo" src="assets/svg/help.svg" alt="re:visist logo"/>
+          </a>
+        </div>
         <label for="textName" class="form-label">Name</label>
         <input type="text" id="textName" name="name" placeholder="Maurice Moss" class="form-field"/>
         <label for="textPhone" class="form-label">Telefonnummer</label>
@@ -66,9 +71,11 @@
       </form>
     </div>
   </div>
+
   <div class="section">
     <a href="#help-modal" class="help-link">So funktionierts</a>
   </div>
+
   <div id="help-modal" class="help">
     <div class="help-overlay">
       <div class="overlay-header">

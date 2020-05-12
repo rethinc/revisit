@@ -39,6 +39,12 @@ form > * {
   margin-bottom: 5px;
 }
 
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 :focus {
   outline-width: 0;
 }
@@ -178,7 +184,7 @@ form > * {
   font-size: 18px;
   font-weight: 600;
   color: #132C45;
-  margin-bottom: 12px;
+  margin: 0 0 12px 0;
 }
 
 .form-label {
