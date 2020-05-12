@@ -266,23 +266,13 @@ input[type=text] {
   border-bottom: #50E3C2;
 }
 
-.link:after {
-  content: "";
-  position: absolute;
-  height: 1px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #48CCAE;
-}
-
 .project-overview-link {
   display: flex;
   text-decoration: none;
-  text-align: center;
   justify-content: center;
   justify-items: center;
   font-weight: 600;
+  align-items: center;
 }
 
 .project-overview-link:hover {
@@ -402,4 +392,13 @@ button.firebaseui-id-submit.firebaseui-button.mdl-button.mdl-js-button.mdl-butto
 .supporting-links {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.supporting-links > * {
+  margin-right: 12px;
+}
+
+.supporting-links > *:last-child {
+  margin-right: 0;
 }
