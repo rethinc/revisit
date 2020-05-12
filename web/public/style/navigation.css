@@ -78,8 +78,7 @@
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 0px;
-    padding-top: 70px;
+    padding: 40px 20px ;
     background: #132C45;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
@@ -102,6 +101,12 @@
     flex-direction: column;
     text-align: center;
     justify-content: center;
+}
+
+.menu-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-button {
