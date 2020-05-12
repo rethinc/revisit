@@ -243,7 +243,7 @@ form > * {
   margin-bottom: 40px;
 }
 
-.help-link {
+.link {
   position: relative;
   font-size: 1em;
   text-decoration: none;
@@ -251,7 +251,7 @@ form > * {
   border-bottom: #50E3C2;
 }
 
-.help-link:after {
+.link:after {
   content: "";
   position: absolute;
   height: 1px;
