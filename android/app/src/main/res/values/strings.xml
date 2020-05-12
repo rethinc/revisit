@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">re:visit</string>
-    <string name="scan_barcode_message">Scanne den Barcode der Kunden</string>
-    <string name="scanNext">Nächsten Barcode scannen</string>
+    <string name="scanNext">Nächsten QR-Code scannen</string>
     <string name="ok">OK</string>
     <string name="error">Fehler</string>
     <string name="logout">Ausloggen</string>
-    <string name="intro_message">Scanne den Barcode des Kunden um seinen Besuch zu registrieren.</string>
-    <string name="enter_secret_message">Gib ein Passwort ein, mit welchem deine Daten verschlüsselt werden. Nur wer dieses Passwort hat, hat Zugriff auf die Daten. Dieses Passwort darfst du nicht verlieren.</string>
+    <string name="intro_message">Scanne den QR-Code des Gastes um seinen Besuch zu registrieren.</string>
+    <string name="enter_secret_message">Gib einen geheimen Schlüssel ein, mit welchem deine Daten verschlüsselt werden. Nur wer dieses geheimen Schlüssel hat, hat Zugriff auf die Daten.\n
+        Bewahre ihn deshalb gut auf.</string>
     <string name="save">Speichern</string>
-    <string name="show_secret_key">Passwort anzeigen</string>
-    <string name="delete_key">Passwort löschen</string>
-    <string name="password_error">Es wurde bereits ein Passwort gesetzt, welches nicht diesem Passwort entspricht.</string>
+    <string name="show_secret_key">Geheimen Schlüssel anzeigen</string>
+    <string name="delete_key">Geheimen Schlüssel löschen</string>
+    <string name="password_error">Es wurde bereits ein geheimer Schlüssel gesetzt, welches nicht dem eingegebenen Schlüssel entspricht.</string>
     <string name="table">Tisch</string>
-    <string name="waiter">Kellner/in</string>
+    <string name="waiter">Servicekraft</string>
 </resources>
