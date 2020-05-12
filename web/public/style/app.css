@@ -333,3 +333,9 @@ textarea {
   max-height: 20px;
   background-color: #F5F5F5;
 }
+
+.overlay-header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #132C45;
+}
