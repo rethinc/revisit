@@ -56,7 +56,7 @@
         headerFilterPlaceholder: 'Nach Datum filtern'
       },
       {title: 'Tisch', field: 'table'},
-      {title: 'Bedienung', field: 'waiter'},
+      {title: 'Servicekraft', field: 'waiter'},
       {
         formatter: deleteIcon,
         width: 44,
