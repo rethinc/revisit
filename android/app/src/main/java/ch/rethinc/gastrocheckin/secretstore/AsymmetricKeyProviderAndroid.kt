@@ -9,6 +9,7 @@ import java.math.BigInteger
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.KeyStore
+import java.security.PrivateKey
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
@@ -49,10 +50,12 @@ class AsymmetricKeyProviderAndroid(
     }
 
     private fun KeyStore.getKeyPair(alias: String): KeyPair {
-        val privateKeyEntry = this.getEntry(alias, null) as? KeyStore.PrivateKeyEntry
+        val privateKey = this.getKey(alias, null) as? PrivateKey
             ?: throw IllegalArgumentException("No valid key for alias $alias found")
 
-        return KeyPair(privateKeyEntry.certificate.publicKey, privateKeyEntry.privateKey)
+        val publicKey = this.getCertificate(alias).publicKey
+
+        return KeyPair(publicKey, privateKey)
     }
 
     private fun KeyStore.createKeyPair(
