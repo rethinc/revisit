@@ -5,12 +5,12 @@ import android.util.Base64.NO_WRAP
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ch.rethinc.gastrocheckin.secretstore.Random
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import java.security.SecureRandom
 
 class SaltRepositoryFirebase(
     private val firestore: FirebaseFirestore,
@@ -37,7 +37,10 @@ class SaltRepositoryFirebase(
                 } else {
                     val newSalt = generateSalt()
                     userDocument
-                        .set(mapOf(saltField to Base64.encodeToString(newSalt, NO_WRAP)), SetOptions.merge())
+                        .set(
+                            mapOf(saltField to Base64.encodeToString(newSalt, NO_WRAP)),
+                            SetOptions.merge()
+                        )
                         .addOnSuccessListener {
                             liveData.postValue(Result.success(newSalt))
                         }
@@ -61,9 +64,7 @@ class SaltRepositoryFirebase(
     }
 
     private fun generateSalt(): ByteArray {
-        val salt = ByteArray(128)
-        SecureRandom().nextBytes(salt)
-        return salt
+        return Random.bytes(128)
     }
 
     private fun DocumentSnapshot.getSalt(): String? {

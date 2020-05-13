@@ -2,8 +2,8 @@ package ch.rethinc.store
 
 import android.util.Base64
 import android.util.Base64.NO_WRAP
+import ch.rethinc.gastrocheckin.secretstore.Random
 import java.security.Key
-import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.Cipher.DECRYPT_MODE
 import javax.crypto.Cipher.ENCRYPT_MODE
@@ -18,10 +18,10 @@ class AesSymmetricCipher(
         private val initializationVectorLength: Int = 16
     }
 
-    override fun encrypt(value: String): String {
+    override fun encrypt(cleartext: String): String {
         val initializationVector = generateInitializationVector()
         val encodedBytes = doFinalCipher(
-            input = value.toByteArray(),
+            input = cleartext.toByteArray(),
             key = symmetricKeyProvider.getOrCreateSecretKey(),
             mode = ENCRYPT_MODE,
             initializationVector = initializationVector
@@ -70,11 +70,7 @@ class AesSymmetricCipher(
         return cipher.doFinal(input)
     }
 
-    private fun generateInitializationVector(): ByteArray {
-        val secureRandom = SecureRandom()
-        val iv = ByteArray(initializationVectorLength)
-        secureRandom.nextBytes(iv)
-        return iv
-    }
+    private fun generateInitializationVector(): ByteArray =
+        Random.bytes(initializationVectorLength)
 
 }

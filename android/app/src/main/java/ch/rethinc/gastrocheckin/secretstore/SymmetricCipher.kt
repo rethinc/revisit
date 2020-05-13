@@ -2,9 +2,9 @@ package ch.rethinc.store
 
 interface SymmetricCipher {
 
-    fun encrypt(value: String): String
+    fun encrypt(cleartext: String): String
 
-    fun decrypt(value: String?): String?
+    fun decrypt(ciphertext: String?): String?
 
     fun removeKey()
 }

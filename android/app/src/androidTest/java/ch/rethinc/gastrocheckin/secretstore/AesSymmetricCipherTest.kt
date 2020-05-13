@@ -1,9 +1,8 @@
 package ch.rethinc.store
 
-import android.util.Log
+import ch.rethinc.gastrocheckin.secretstore.Random
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import java.security.SecureRandom
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
@@ -12,7 +11,7 @@ class AesSymmetricCipherTest {
     @Test
     fun encryptAndDecrypt() {
         val outputKeyLength = 256
-        val secureRandom = SecureRandom()
+        val secureRandom = Random.secureRandom()
         val keyGenerator: KeyGenerator = KeyGenerator.getInstance("AES")
         keyGenerator.init(outputKeyLength, secureRandom)
         val key = keyGenerator.generateKey()

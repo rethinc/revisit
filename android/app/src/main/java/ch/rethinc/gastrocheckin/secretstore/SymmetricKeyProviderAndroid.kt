@@ -3,7 +3,7 @@ package ch.rethinc.store
 import android.content.Context
 import android.util.Base64
 import android.util.Base64.DEFAULT
-import java.security.SecureRandom
+import ch.rethinc.gastrocheckin.secretstore.Random
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
@@ -62,9 +62,8 @@ class SymmetricKeyProviderAndroid(
 
     private fun generateSecretKey(): SecretKey {
         val outputKeyLength = 256
-        val secureRandom = SecureRandom()
         val keyGenerator: KeyGenerator = KeyGenerator.getInstance(secretKeyAlgorithm)
-        keyGenerator.init(outputKeyLength, secureRandom)
+        keyGenerator.init(outputKeyLength, Random.secureRandom())
         return keyGenerator.generateKey()
     }
 
