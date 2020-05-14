@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
-    <link href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/tabulator-tables@4.6.2/dist/css/bootstrap/tabulator_bootstrap4.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link type="text/css" rel="stylesheet" href="style/app.css?v=1.0.6"/>
     <link type="text/css" rel="stylesheet" href="style/tabulator.css?v=1.0.6"/>
     <link type="text/css" rel="stylesheet" href="style/navigation.css?v=1.0.6"/>
@@ -250,6 +251,7 @@
                 <h2 class="form-title">Besuch erfassen</h2>
                 <input type="text" id="textName" placeholder="Name" class="form-field"/>
                 <input type="text" id="textPhone" placeholder="Telefonnummer" class="form-field"/>
+                <input type="text" id="textTimestamp" placeholder="Datum des Besuchs" class="form-field"/>
                 <input type="text" id="textTable" placeholder="Tisch" class="form-field"/>
                 <input type="text" id="textWaiter" placeholder="Servicekraft" class="form-field"/>
                 <button id="buttonCreate" class="form-button">Erfassen</button>
@@ -403,6 +405,7 @@
     </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>

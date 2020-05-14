@@ -4,6 +4,7 @@
     return
   }
   const localstorage = window.localStorage
+  const dateTimeFormat = 'd.m.Y H:i'
 
   const auth = firebase.auth()
   const db = firebase.firestore()
@@ -17,6 +18,12 @@
   const textPhone = document.getElementById('textPhone')
   const textTable = document.getElementById('textTable')
   const textWaiter = document.getElementById('textWaiter')
+  var timestamp = flatpickr('#textTimestamp', {
+    dateFormat: dateTimeFormat,
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(Date.now())
+  })
   const buttonCreate = document.getElementById('buttonCreate')
   const buttonSecretKey = document.getElementById('buttonSecretKey')
   const textSecretKey = document.getElementById('textSecretKey')
@@ -50,7 +57,7 @@
         title: 'Datum',
         field: 'visitedAt',
         formatter: (cell, formatterParams) => {
-          return new Date(cell.getValue()).format('d.m.Y H:i')
+          return new Date(cell.getValue()).format(dateTimeFormat)
         },
         headerFilter: 'input',
         headerFilterPlaceholder: 'Nach Datum filtern'
@@ -181,7 +188,7 @@
       phone: encrypt(phone, secretKey),
       table: encrypt(table, secretKey),
       waiter: encrypt(waiter, secretKey),
-      visitedAt: Date.now()
+      visitedAt: timestamp.selectedDates[0].getTime()
     }
     return db
       .collection('places')
