@@ -1,149 +1,151 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>re:visit</title>
-  <link type="text/css" rel="stylesheet" href="style/app.css?v=1.0.7"/>
-  <link type="text/css" rel="stylesheet" href="style/navigation.css?v=1.0.7"/>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-  <link rel="manifest" href="favicon/site.webmanifest">
-  <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45">
-  <link rel="shortcut icon" href="favicon/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="gastro checkin">
-  <meta name="application-name" content="gastro checkin">
-  <meta name="msapplication-TileColor" content="#132c45">
-  <meta name="msapplication-config" content="favicon/browserconfig.xml">
-  <meta name="theme-color" content="#132c45">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
-</head>
-<body>
-
-  <nav role="navigation" class="navbar">
-    <div class="navbar-items">
-      <div></div>
-      <a href="/" class="navbar-logo-link">
-        <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo"/>
-      </a>
-      <div id="menuToggle">
-        <input type="checkbox" />
-        <span></span>
-        <span></span>
-        <span></span>
-        <ul id="menu">
-          <div class="menu-list">
-            <img class="menu-logo" src="assets/svg/logo-sign.svg" alt="re:visist logo"/>
-            <a class="menu-link" href="/restaurant">Für Gastrobetriebe</a>
-            <a class="menu-link" href="/datenschutz">Datenschutzbestimmung</a>
-            <a class="menu-link" href="/impressum">Impressum</a>
-            <div class="menu-action">
-              <a class="menu-button" href="/" >Persönlichen QR-Code generieren</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>re:visit</title>
+    <link type="text/css" rel="stylesheet" href="style/app.css?v=1.0.7" />
+    <link type="text/css" rel="stylesheet" href="style/navigation.css?v=1.0.7" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#132c45" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="gastro checkin" />
+    <meta name="application-name" content="gastro checkin" />
+    <meta name="msapplication-TileColor" content="#132c45" />
+    <meta name="msapplication-config" content="favicon/browserconfig.xml" />
+    <meta name="theme-color" content="#132c45" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav role="navigation" class="navbar">
+      <div class="navbar-items">
+        <div></div>
+        <a href="/" class="navbar-logo-link">
+          <img class="navbar-logo" src="assets/svg/logo.svg" alt="re:visist logo" />
+        </a>
+        <div id="menuToggle">
+          <input type="checkbox" />
+          <span></span>
+          <span></span>
+          <span></span>
+          <ul id="menu">
+            <div class="menu-list">
+              <img class="menu-logo" src="assets/svg/logo-sign.svg" alt="re:visist logo" />
+              <a class="menu-link" href="/restaurant">Für Gastrobetriebe</a>
+              <a class="menu-link" href="/datenschutz">Datenschutzbestimmung</a>
+              <a class="menu-link" href="/impressum">Impressum</a>
+              <div class="menu-action">
+                <a class="menu-button" href="/">Persönlichen QR-Code generieren</a>
+              </div>
             </div>
-          </div>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="qr-code">
-    <div id="qrCode" class="qr-code-image"></div>
-  </div>
-  <div class="main-content">
-    <div id="registrationForm">
-      <form action="/" method="GET" class="form">
-        <div class="form-header">
-          <h2 class="form-title">Persönlichen QR-Code generieren</h2>
-          <a href="#help-modal">
-            <img class="navbar-logo" src="assets/svg/help.svg" alt="re:visist logo"/>
-          </a>
+          </ul>
         </div>
-        <label for="textName" class="form-label">Name</label>
-        <input type="text" id="textName" name="name" placeholder="Maurice Moss" class="form-field"/>
-        <label for="textPhone" class="form-label">Telefonnummer</label>
-        <input type="text" id="textPhone" name="phone" placeholder="+41 79 123 45 67" class="form-field"/>
-        <button id="buttonCreate" class="form-button" type="submit" >Persönlichen QR-Code generieren</button>
-      </form>
+      </div>
+    </nav>
+
+    <div class="qr-code">
+      <div id="qrCode" class="qr-code-image"></div>
     </div>
-    <div class="section">
+
+    <div class="main-content">
+      <div id="registrationForm">
+        <form action="/" method="GET" class="form">
+          <div class="form-header">
+            <h2 class="form-title">Persönlichen QR-Code generieren</h2>
+            <a href="#help-modal">
+              <img class="navbar-logo" src="assets/svg/help.svg" alt="re:visist logo" />
+            </a>
+          </div>
+          <label for="textName" class="form-label">Name</label>
+          <input type="text" id="textName" name="name" placeholder="Maurice Moss" class="form-field" />
+          <label for="textPhone" class="form-label">Telefonnummer</label>
+          <input type="text" id="textPhone" name="phone" placeholder="+41 79 123 45 67" class="form-field" />
+          <button id="buttonCreate" class="form-button" type="submit">Persönlichen QR-Code generieren</button>
+        </form>
+      </div>
+      <div class="section">
         <a href="#privacy-modal" class="project-overview-link">
-          <img class="project-overview-icon" src="assets/svg/lock.svg" alt="re:visist logo"/>
+          <img class="project-overview-icon" src="assets/svg/lock.svg" alt="re:visist logo" />
           <span class="link">Was passiert mit meinen Daten?</span>
         </a>
-    </div>
-  </div>
-
-  <div id="privacy-modal" class="help">
-    <div class="help-overlay">
-      <div class="overlay-header">
-        <h2 class="overlay-header-title">Was passiert mit meinen Daten?</h2>
-        <a href="#" class="help-close">
-          <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen"/>
-        </a>
-      </div>
-      <div class="overlay-content">
-
-        <img class="content-image" src="assets/svg/guide-privacy-01.svg" alt="Daten bleiben bei dir"/>
-        <h2 class="form-title">Deine Daten bleiben bei dir!</h2>
-        <p>
-          Beim Generieren deines persönlichen QR-Codes werden keine Daten gespeichert, an einen Server geschickt oder irgendwo registriert.
-          In deinem Browser wird dein persönlicher QR-Code generiert, welchen du auf Wunsch auf deinem Smartphone speichern kannst.
-        </p>
-
-        <img class="content-image" src="assets/svg/guide-privacy-02.svg" alt="Gastrobetrieb sie"/>
-        <h2 class="form-title">Erst nach dem Scannen sieht der Gastrobetrieb deine Daten</h2>
-        <p>
-          Erst wenn die Servicekraft deinen persönlichen QR-Code scannt, werden deine Daten gespeichert und dem Gastrobetrieb zugänglich gemacht.
-          Nach 14 Tagen werden deine Daten automatisch wieder gelöscht.
-        </p>
-
-        <img class="content-image" src="assets/svg/guide-privacy-03.svg" alt="QR-Code speichern"/>
-        <h2 class="form-title">Deine Daten werden sicher verschlüsselt abgelegt</h2>
-        <p>Der Gastrobetrieb hat einen geheimen Schlüssel mit welchem deine Daten verschlüsselt werden.
-          Nur wer diesen geheimen Schlüssel hat, kann deine Daten lesen.
-          Da dieser Schlüssel nur dem Gastrobetrieb bekannt ist, können deine Daten von keinem Dritten gelesen werden.
-        </p> <br><br>
       </div>
     </div>
-  </div>
 
-  <div id="help-modal" class="help">
-    <div class="help-overlay">
-      <div class="overlay-header">
-        <h2 class="overlay-header-title">So funktionierts</h2>
-        <a href="#" class="help-close">
-          <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen"/>
-        </a>
-      </div>
-      <div class="overlay-content">
-        <p class="intro"><b>Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste registrieren. Dies soll das tracken von Kontakten im Falle einer Erkrankung eines Gastes vereinfachen.</b>
-        </p>
-        <img class="content-image" src="assets/svg/generate-code.svg" alt="QR-Code erstellen"/>
-        <h2 class="form-title">1. Persönlichen QR-Code generieren</h2>
-        <p>Generiere deinen persönlichen QR-Code für die empfohlene Identifizierung im Gastrobetrieb.</p>
-
-        <img class="content-image" src="assets/svg/show-code.svg" alt="QR-Code vorweisen"/>
-        <h2 class="form-title">2. QR-Code der Servicekraft zum Scannen geben.</h2>
-        <p>Persönlichen QR-Code der Servicekraft zum scannen geben. Deine Daten werden verschlüsselt und nur für diesen Gastrobetrieb einsehbar für 14 Tage gespeichert.</p>
-
-        <img class="content-image" src="assets/svg/save-code.svg" alt="QR-Code speichern"/>
-        <h2 class="form-title">3. Persönlichen QR-Code für nächsten Besuch speichern</h2>
-        <p>Füge die Seite mit dem deinem persönlichen QR-Code deinen <b>Lesezeichen oder deinem Home Screen hinzu,</b> um diesen für ür weitere Besuche in Gastrobetrieben bereit zu haben.</p> <br><br>
-
-        <div class="section">
-          <a href="#privacy-modal" class="project-overview-link">
-            <img class="project-overview-icon" src="assets/svg/lock.svg" alt="re:visist logo"/>
-            <span class="link">Was passiert mit meinen Daten?</span>
+    <div id="privacy-modal" class="help">
+      <div class="help-overlay">
+        <div class="overlay-header">
+          <h2 class="overlay-header-title">Was passiert mit meinen Daten?</h2>
+          <a href="#" class="help-close">
+            <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen" />
           </a>
         </div>
+        <div class="overlay-content">
+          <img class="content-image" src="assets/svg/guide-privacy-01.svg" alt="Daten bleiben bei dir" />
+          <h2 class="form-title">Deine Daten bleiben bei dir!</h2>
+          <p>
+            Beim Generieren deines persönlichen QR-Codes werden keine Daten gespeichert, an einen Server geschickt oder irgendwo registriert. In deinem Browser wird dein persönlicher QR-Code generiert, welchen du auf Wunsch auf deinem
+            Smartphone speichern kannst.
+          </p>
 
+          <img class="content-image" src="assets/svg/guide-privacy-02.svg" alt="Gastrobetrieb sie" />
+          <h2 class="form-title">Erst nach dem Scannen sieht der Gastrobetrieb deine Daten</h2>
+          <p>
+            Erst wenn die Servicekraft deinen persönlichen QR-Code scannt, werden deine Daten gespeichert und dem Gastrobetrieb zugänglich gemacht. Nach 14 Tagen werden deine Daten automatisch wieder gelöscht.
+          </p>
+
+          <img class="content-image" src="assets/svg/guide-privacy-03.svg" alt="QR-Code speichern" />
+          <h2 class="form-title">Deine Daten werden sicher verschlüsselt abgelegt</h2>
+          <p>
+            Der Gastrobetrieb hat einen geheimen Schlüssel mit welchem deine Daten verschlüsselt werden. Nur wer diesen geheimen Schlüssel hat, kann deine Daten lesen. Da dieser Schlüssel nur dem Gastrobetrieb bekannt ist, können deine
+            Daten von keinem Dritten gelesen werden.
+          </p>
+          <br />
+          <br />
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="js/qrcode.min.js"></script>
-  <script src="js/qrcode.base.js"></script>
-</body>
+    <div id="help-modal" class="help">
+      <div class="help-overlay">
+        <div class="overlay-header">
+          <h2 class="overlay-header-title">So funktionierts</h2>
+          <a href="#" class="help-close">
+            <img class="navbar-logo" src="assets/svg/cross.svg" alt="hilfe schliessen" />
+          </a>
+        </div>
+        <div class="overlay-content">
+          <p class="intro">
+            <b>Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste registrieren. Dies soll das tracken von Kontakten im Falle einer Erkrankung eines Gastes vereinfachen.</b>
+          </p>
+          <img class="content-image" src="assets/svg/generate-code.svg" alt="QR-Code erstellen" />
+          <h2 class="form-title">1. Persönlichen QR-Code generieren</h2>
+          <p>Generiere deinen persönlichen QR-Code für die empfohlene Identifizierung im Gastrobetrieb.</p>
+
+          <img class="content-image" src="assets/svg/show-code.svg" alt="QR-Code vorweisen" />
+          <h2 class="form-title">2. QR-Code der Servicekraft zum Scannen geben.</h2>
+          <p>Persönlichen QR-Code der Servicekraft zum scannen geben. Deine Daten werden verschlüsselt und nur für diesen Gastrobetrieb einsehbar für 14 Tage gespeichert.</p>
+
+          <img class="content-image" src="assets/svg/save-code.svg" alt="QR-Code speichern" />
+          <h2 class="form-title">3. Persönlichen QR-Code für nächsten Besuch speichern</h2>
+          <p>Füge die Seite mit dem deinem persönlichen QR-Code deinen <b>Lesezeichen oder deinem Home Screen hinzu,</b> um diesen für ür weitere Besuche in Gastrobetrieben bereit zu haben.</p>
+          <br />
+          <br />
+
+          <div class="section">
+            <a href="#privacy-modal" class="project-overview-link">
+              <img class="project-overview-icon" src="assets/svg/lock.svg" alt="re:visist logo" />
+              <span class="link">Was passiert mit meinen Daten?</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/qrcode.base.js"></script>
+  </body>
 </html>
