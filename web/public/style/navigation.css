@@ -5,7 +5,6 @@
     -webkit-user-select: none;
     user-select: none;
 }
-
 .menu-link {
     text-decoration: none;
     color: #ffffff;
@@ -15,12 +14,9 @@
     align-items: center;
     max-height: 100px;
 }
-
 .menu-link:hover {
     color: #50E3C2;
 }
-
-
 #menuToggle input {
     display: block;
     width: 40px;
@@ -29,11 +25,12 @@
     top: -7px;
     left: -5px;
     cursor: pointer;
-    opacity: 0; /* hide this */
-    z-index: 2; /* and place it over the hamburger */
+    opacity: 0;
+    /* hide this */
+    z-index: 2;
+    /* and place it over the hamburger */
     -webkit-touch-callout: none;
 }
-
 #menuToggle span {
     display: block;
     width: 33px;
@@ -43,34 +40,26 @@
     border-radius: 3px;
     z-index: 1;
     transform-origin: 4px 0;
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-    opacity 0.55s ease;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
 }
-
 #menuToggle span:first-child {
     transform-origin: 0% 0%;
 }
-
 #menuToggle span:nth-last-child(2) {
     transform-origin: 0% 100%;
 }
-
 #menuToggle input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
     background: #fff;
 }
-
 #menuToggle input:checked ~ span:nth-last-child(3) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
 }
-
 #menuToggle input:checked ~ span:nth-last-child(2) {
     transform: rotate(-45deg) translate(0, -1px);
 }
-
 #menu {
     position: fixed;
     top: 0;
@@ -78,7 +67,7 @@
     bottom: 0;
     left: 0;
     margin: 0;
-    padding: 40px 20px ;
+    padding: 40px 20px;
     background: #132C45;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
@@ -88,7 +77,6 @@
     z-index: -1;
     display: flex;
 }
-
 .menu-list {
     font-size: 1.5em;
     font-weight: 600;
@@ -102,13 +90,11 @@
     text-align: center;
     justify-content: center;
 }
-
-.menu-action{
+.menu-action {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .menu-button {
     font-size: 1em;
     font-weight: 600;
@@ -123,24 +109,19 @@
     cursor: pointer;
     border-radius: 4px;
 }
-
-.menu-logo{
+.menu-logo {
     max-height: 4vh;
 }
-.menu-list > *{
+.menu-list > * {
     flex: 1 1 auto;
 }
-
-.menu-list > *{
+.menu-list > * {
     margin-bottom: 5vh;
 }
-
-
 #menu li {
     padding: 10px 0;
     font-size: 22px;
 }
-
 #menuToggle input:checked ~ ul {
     transform: none;
 }
