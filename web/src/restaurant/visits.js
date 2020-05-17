@@ -1,8 +1,8 @@
 const encryption = require("./encryption.js");
-const firebase = require("./revisit.firebase.js")
 const uuid4 = require('uuid4');
 
 module.exports.create = function(
+  firestore,
   name,
   phone,
   table,
@@ -19,7 +19,7 @@ module.exports.create = function(
     waiter: encryption.encrypt(waiter, secretKey),
     visitedAt: time
   }
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -30,8 +30,8 @@ module.exports.create = function(
     );
 }
 
-module.exports.delete = function(visitId, userId) {
-  return firebase.firestore
+module.exports.delete = function(firestore, visitId, userId) {
+  return firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -42,8 +42,8 @@ module.exports.delete = function(visitId, userId) {
     );
 }
 
-module.exports.subscribeToAllVisits = function(userId, secretKey, handler) {
-    return firebase.firestore
+module.exports.subscribeToAllVisits = function(firestore, userId, secretKey, handler) {
+    return firestore
       .collection('places')
       .doc(userId)
       .collection('visits')

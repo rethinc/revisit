@@ -12,6 +12,7 @@
   const dateTimeFormat = 'd.m.Y H:i'
   const auth = revisitFirebase.auth
   const authUi = revisitFirebase.authUi
+  var firestore = revisitFirebase.firestore
 
   const containerSignIn = document.getElementById('containerSignIn')
   const containerSignedIn = document.getElementById('containerSignedIn')
@@ -73,7 +74,7 @@
         hozAlign: 'center',
         cellClick: (e, cell) => {
           if (currentUser) {
-            visits.delete(cell.getRow().getData().id, currentUser.uid)
+            visits.delete(firestore, cell.getRow().getData().id, currentUser.uid)
           }
         },
         headerSort: false
@@ -90,6 +91,7 @@
   var loadVisitsUnsubscribe = null
 
   auth.onAuthStateChanged(firebaseUser => {
+    firestore = revisitFirebase.firestore
     if (firebaseUser) {
       currentUser = firebaseUser
       let secretKey = secretKeyStorage.load()
@@ -115,14 +117,14 @@
 
     buttonSecretKey.addEventListener('click', e => {
       messageSecretError.classList.add('hide')
-      salt.getOrCreate(firebaseUser.uid)
+      salt.getOrCreate(firestore, firebaseUser.uid)
         .then(salt => {
           let password = textSecretKey.value
           if (!password || password === '') {
             messageSecretError.classList.remove('hide')
           }
           let secretKey = encryption.deriveKey(password, salt)
-          return challenge.challengeSecretKey(firebaseUser.uid, secretKey)
+          return challenge.challengeSecretKey(firestore, firebaseUser.uid, secretKey)
             .then(isValid => {
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
@@ -146,7 +148,7 @@
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = visits
-      .subscribeToAllVisits(firebaseUser.uid, secretKeyStorage.load(), visits => {
+      .subscribeToAllVisits(firestore, firebaseUser.uid, secretKeyStorage.load(), visits => {
         visitsTable.setData(visits)
       })
   }
@@ -180,6 +182,7 @@
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
       visits.create(
+        firestore,
         textName.value,
         textPhone.value,
         textTable.value,

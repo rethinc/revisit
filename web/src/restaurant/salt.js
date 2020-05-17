@@ -1,14 +1,13 @@
 const encryption = require('./encryption.js')
-const firebase = require('./revisit.firebase.js')
 
-module.exports.getOrCreate = function (userId) {
-  return getSalt(userId)
+module.exports.getOrCreate = function (firestore, userId) {
+  return getSalt(firestore, userId)
     .then((salt) => {
       if (salt) {
         return salt
       } else {
         var newSalt = encryption.createSaltBase64()
-        return storeSalt(userId, newSalt)
+        return storeSalt(firestore, userId, newSalt)
           .then(i => {
             return newSalt
           })
@@ -18,8 +17,8 @@ module.exports.getOrCreate = function (userId) {
     })
 }
 
-function getSalt(userId) {
-  return firebase.firestore
+function getSalt(firestore, userId) {
+  return firestore
     .collection('places')
     .doc(userId)
     .get()
@@ -36,8 +35,8 @@ function getSalt(userId) {
 }
 
 
-function storeSalt(userId, salt) {
-  return firebase.firestore
+function storeSalt(firestore, userId, salt) {
+  return firestore
     .collection('places')
     .doc(userId)
     .set({salt: salt}, {merge: true})

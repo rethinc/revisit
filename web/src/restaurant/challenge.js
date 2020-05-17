@@ -1,9 +1,8 @@
-const firebase = require('./revisit.firebase.js')
 const encryption = require('./encryption.js')
 
-module.exports.challengeSecretKey = function(userId, secretKey) {
+module.exports.challengeSecretKey = function(firestore, userId, secretKey) {
   let challenge = 'This is the challenge!'
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .get()
@@ -13,7 +12,7 @@ module.exports.challengeSecretKey = function(userId, secretKey) {
         let decrypted = encryption.decrypt(storedChallenge, secretKey)
         return decrypted === challenge
       } else {
-        return saveEncryptedChallenge(userId, challenge, secretKey)
+        return saveEncryptedChallenge(firestore, userId, challenge, secretKey)
           .then(_ => {
             return true
           })
@@ -23,9 +22,9 @@ module.exports.challengeSecretKey = function(userId, secretKey) {
     })
 }
 
-function saveEncryptedChallenge(userId, challenge, secretKey) {
+function saveEncryptedChallenge(firestore, userId, challenge, secretKey) {
   let encryptedChallenge = encryption.encrypt(challenge, secretKey)
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .set({challenge: encryptedChallenge}, {merge: true})

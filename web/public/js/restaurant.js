@@ -29163,12 +29163,11 @@ exports.createContext = Script.createContext = function (context) {
 };
 
 },{}],193:[function(require,module,exports){
-const firebase = require('./revisit.firebase.js')
 const encryption = require('./encryption.js')
 
-module.exports.challengeSecretKey = function(userId, secretKey) {
+module.exports.challengeSecretKey = function(firestore, userId, secretKey) {
   let challenge = 'This is the challenge!'
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .get()
@@ -29178,7 +29177,7 @@ module.exports.challengeSecretKey = function(userId, secretKey) {
         let decrypted = encryption.decrypt(storedChallenge, secretKey)
         return decrypted === challenge
       } else {
-        return saveEncryptedChallenge(userId, challenge, secretKey)
+        return saveEncryptedChallenge(firestore, userId, challenge, secretKey)
           .then(_ => {
             return true
           })
@@ -29188,15 +29187,15 @@ module.exports.challengeSecretKey = function(userId, secretKey) {
     })
 }
 
-function saveEncryptedChallenge(userId, challenge, secretKey) {
+function saveEncryptedChallenge(firestore, userId, challenge, secretKey) {
   let encryptedChallenge = encryption.encrypt(challenge, secretKey)
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .set({challenge: encryptedChallenge}, {merge: true})
 }
 
-},{"./encryption.js":195,"./revisit.firebase.js":247}],194:[function(require,module,exports){
+},{"./encryption.js":195}],194:[function(require,module,exports){
 /* eslint no-extend-native: 0 */
 
 // Source: https://raw.githubusercontent.com/jacwright/date.format/master/date.format.js
@@ -84342,6 +84341,7 @@ var __classPrivateFieldSet;
   const dateTimeFormat = 'd.m.Y H:i'
   const auth = revisitFirebase.auth
   const authUi = revisitFirebase.authUi
+  var firestore = revisitFirebase.firestore
 
   const containerSignIn = document.getElementById('containerSignIn')
   const containerSignedIn = document.getElementById('containerSignedIn')
@@ -84403,7 +84403,7 @@ var __classPrivateFieldSet;
         hozAlign: 'center',
         cellClick: (e, cell) => {
           if (currentUser) {
-            visits.delete(cell.getRow().getData().id, currentUser.uid)
+            visits.delete(firestore, cell.getRow().getData().id, currentUser.uid)
           }
         },
         headerSort: false
@@ -84420,6 +84420,7 @@ var __classPrivateFieldSet;
   var loadVisitsUnsubscribe = null
 
   auth.onAuthStateChanged(firebaseUser => {
+    firestore = revisitFirebase.firestore
     if (firebaseUser) {
       currentUser = firebaseUser
       let secretKey = secretKeyStorage.load()
@@ -84445,14 +84446,14 @@ var __classPrivateFieldSet;
 
     buttonSecretKey.addEventListener('click', e => {
       messageSecretError.classList.add('hide')
-      salt.getOrCreate(firebaseUser.uid)
+      salt.getOrCreate(firestore, firebaseUser.uid)
         .then(salt => {
           let password = textSecretKey.value
           if (!password || password === '') {
             messageSecretError.classList.remove('hide')
           }
           let secretKey = encryption.deriveKey(password, salt)
-          return challenge.challengeSecretKey(firebaseUser.uid, secretKey)
+          return challenge.challengeSecretKey(firestore, firebaseUser.uid, secretKey)
             .then(isValid => {
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
@@ -84476,7 +84477,7 @@ var __classPrivateFieldSet;
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = visits
-      .subscribeToAllVisits(firebaseUser.uid, secretKeyStorage.load(), visits => {
+      .subscribeToAllVisits(firestore, firebaseUser.uid, secretKeyStorage.load(), visits => {
         visitsTable.setData(visits)
       })
   }
@@ -84510,6 +84511,7 @@ var __classPrivateFieldSet;
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
       visits.create(
+        firestore,
         textName.value,
         textPhone.value,
         textTable.value,
@@ -84534,10 +84536,8 @@ var __classPrivateFieldSet;
 }())
 
 },{"./challenge.js":193,"./date.format.js":194,"./encryption.js":195,"./revisit.firebase.js":247,"./salt.js":248,"./secretkey.js":249,"./visits.js":250,"flatpickr":242,"tabulator-tables":243}],247:[function(require,module,exports){
-
-if (!window.firebase) {
-  window.firebase = require('firebase/app')
-  var firebaseConfig = {
+  const firebase = require('firebase/app')
+  const firebaseConfig = {
     apiKey: 'AIzaSyAFPTOBgRVaunHBY5tP1wiZbjnwQLC9y_A',
     authDomain: 'gastro-checkin.firebaseapp.com',
     databaseURL: 'https://gastro-checkin.firebaseio.com',
@@ -84546,36 +84546,32 @@ if (!window.firebase) {
     messagingSenderId: '1077652043096',
     appId: '1:1077652043096:web:d88109016e93a447e0612d'
   }
-  window.firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(firebaseConfig)
   require('firebase/firestore') // Needed for side effects
-  window.firebaseui = require('firebaseui');
-}
+  const firebaseui = require('firebaseui')
 
 
-let auth = window.firebase.auth()
+module.exports.firestore = firebase.firestore()
 
-module.exports.firestore = window.firebase.firestore()
+module.exports.auth = firebase.auth()
 
-module.exports.auth = auth
+module.exports.authUi = new window.firebaseui.auth.AuthUI(firebase.auth())
 
-module.exports.authUi = new window.firebaseui.auth.AuthUI(auth)
-
-module.exports.authContstants = window.firebase.auth
-module.exports.authUiConstants = window.firebaseui.auth
+module.exports.authContstants = firebase.auth
+module.exports.authUiConstants = firebaseui.auth
 
 
 },{"firebase/app":238,"firebase/firestore":240,"firebaseui":241}],248:[function(require,module,exports){
 const encryption = require('./encryption.js')
-const firebase = require('./revisit.firebase.js')
 
-module.exports.getOrCreate = function (userId) {
-  return getSalt(userId)
+module.exports.getOrCreate = function (firestore, userId) {
+  return getSalt(firestore, userId)
     .then((salt) => {
       if (salt) {
         return salt
       } else {
         var newSalt = encryption.createSaltBase64()
-        return storeSalt(userId, newSalt)
+        return storeSalt(firestore, userId, newSalt)
           .then(i => {
             return newSalt
           })
@@ -84585,8 +84581,8 @@ module.exports.getOrCreate = function (userId) {
     })
 }
 
-function getSalt(userId) {
-  return firebase.firestore
+function getSalt(firestore, userId) {
+  return firestore
     .collection('places')
     .doc(userId)
     .get()
@@ -84603,8 +84599,8 @@ function getSalt(userId) {
 }
 
 
-function storeSalt(userId, salt) {
-  return firebase.firestore
+function storeSalt(firestore, userId, salt) {
+  return firestore
     .collection('places')
     .doc(userId)
     .set({salt: salt}, {merge: true})
@@ -84613,7 +84609,7 @@ function storeSalt(userId, salt) {
     })
 }
 
-},{"./encryption.js":195,"./revisit.firebase.js":247}],249:[function(require,module,exports){
+},{"./encryption.js":195}],249:[function(require,module,exports){
 module.exports.canBeStored = function () {
   return typeof (Storage) != 'undefined'
 }
@@ -84634,10 +84630,10 @@ module.exports.remove = function() {
 
 },{}],250:[function(require,module,exports){
 const encryption = require("./encryption.js");
-const firebase = require("./revisit.firebase.js")
 const uuid4 = require('uuid4');
 
 module.exports.create = function(
+  firestore,
   name,
   phone,
   table,
@@ -84654,7 +84650,7 @@ module.exports.create = function(
     waiter: encryption.encrypt(waiter, secretKey),
     visitedAt: time
   }
-  return firebase.firestore
+  return firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -84665,8 +84661,8 @@ module.exports.create = function(
     );
 }
 
-module.exports.delete = function(visitId, userId) {
-  return firebase.firestore
+module.exports.delete = function(firestore, visitId, userId) {
+  return firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -84677,8 +84673,8 @@ module.exports.delete = function(visitId, userId) {
     );
 }
 
-module.exports.subscribeToAllVisits = function(userId, secretKey, handler) {
-    return firebase.firestore
+module.exports.subscribeToAllVisits = function(firestore, userId, secretKey, handler) {
+    return firestore
       .collection('places')
       .doc(userId)
       .collection('visits')
@@ -84706,4 +84702,4 @@ function mapVisit(doc, secretKey) {
 }
 
 
-},{"./encryption.js":195,"./revisit.firebase.js":247,"uuid4":245}]},{},[246]);
+},{"./encryption.js":195,"uuid4":245}]},{},[246]);
