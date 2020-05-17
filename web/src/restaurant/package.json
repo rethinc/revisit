@@ -1,17 +1,16 @@
 {
-  "name": "revisit",
+  "name": "revisit-restaurant",
   "version": "1.0.0",
-  "description": "``` npm intall -g browserify ```",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "revisit-restaurant",
+  "scripts": {},
   "author": "re:thinc GmbH",
   "license": "MIT",
   "dependencies": {
     "crypto-js": "^4.0.0",
     "firebase": "^7.14.4",
     "firebaseui": "^4.5.0",
+    "flatpickr": "^4.6.3",
+    "tabulator-tables": "^4.6.3",
     "uuid4": "^1.1.4"
   }
 }

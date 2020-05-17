@@ -12,7 +12,7 @@ module.exports.create = function(
   secretKey
 ) {
   let visit = {
-    id: uuidv4(),
+    id: uuid4(),
     name: encryption.encrypt(name, secretKey),
     phone: encryption.encrypt(phone, secretKey),
     table: encryption.encrypt(table, secretKey),

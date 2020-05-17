@@ -5,14 +5,11 @@
   let salt = require('./salt.js')
   let secretKeyStorage = require('./secretkey.js')
   let challenge = require('./challenge.js')
+  require('./date.format.js')
+  let Tabulator = require('tabulator-tables');
+  const flatpickr = require("flatpickr")
 
-  if (!secretKeyStorage.canBeStored()) {
-    alert('Sorry, dein Browser wird nicht unterstützt.')
-    return
-  }
-  const localstorage = window.localStorage
   const dateTimeFormat = 'd.m.Y H:i'
-
   const auth = revisitFirebase.auth
   const authUi = revisitFirebase.authUi
 

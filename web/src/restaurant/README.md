@@ -6,6 +6,5 @@ npm intall -g browserify
 ## Deploy
 ```
 npm install
-browserify restaurant.js -o ../public/js/app.js
-firebase deploy
+browserify restaurant.js -o ../../public/js/restaurant.js
 ```
