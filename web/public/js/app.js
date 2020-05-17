@@ -82368,8 +82368,9 @@ var __classPrivateFieldSet;
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
   let salt = require('./salt.js')
+  let secretKeyStorage = require('./secretkey.js')
 
-  if (typeof (Storage) == 'undefined') {
+  if (!secretKeyStorage.canBeStored()) {
     alert('Sorry, dein Browser wird nicht unterstützt.')
     return
   }
@@ -82459,7 +82460,7 @@ var __classPrivateFieldSet;
   auth.onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       currentUser = firebaseUser
-      let secretKey = getSecretKey()
+      let secretKey = secretKeyStorage.load()
       if (secretKey) {
         showSignedInView(firebaseUser)
       } else {
@@ -82492,7 +82493,7 @@ var __classPrivateFieldSet;
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
               } else {
-                saveSecretKey(secretKey)
+                secretKeyStorage.store(secretKey)
                 showSignedInView(firebaseUser)
               }
             })
@@ -82511,7 +82512,7 @@ var __classPrivateFieldSet;
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = visits
-      .subscribeToAllVisits(firebaseUser.uid, getSecretKey(), visits => {
+      .subscribeToAllVisits(firebaseUser.uid, secretKeyStorage.load(), visits => {
         visitsTable.setData(visits)
       });
   }
@@ -82551,7 +82552,7 @@ var __classPrivateFieldSet;
         textWaiter.value,
         timestamp.selectedDates[0].getTime(),
         currentUser.uid,
-        getSecretKey()
+        secretKeyStorage.load()
       )
         .then(_ => {
           textPhone.value = ''
@@ -82563,7 +82564,7 @@ var __classPrivateFieldSet;
   }
 
   function signOut() {
-    removeSecretKey()
+    secretKeyStorage.remove()
     auth.signOut()
   }
 
@@ -82599,21 +82600,9 @@ var __classPrivateFieldSet;
       .doc(userId)
       .set({challenge: encryptedChallenge}, {merge: true})
   }
-
-  function saveSecretKey(secretKey) {
-    localstorage.setItem('secretKey', secretKey)
-  }
-
-  function getSecretKey() {
-    return localstorage.getItem('secretKey')
-  }
-
-  function removeSecretKey() {
-    localstorage.removeItem('secretKey')
-  }
 }())
 
-},{"./encryption.js":193,"./salt.js":250,"./visits.js":251}],249:[function(require,module,exports){
+},{"./encryption.js":193,"./salt.js":250,"./secretkey.js":251,"./visits.js":252}],249:[function(require,module,exports){
 let firebase = require('firebase');
 require("firebase/firestore"); // Needed for side effects
 
@@ -82681,6 +82670,25 @@ function storeSalt(userId, salt) {
 }
 
 },{"./encryption.js":193,"./revisit.firebase.js":249}],251:[function(require,module,exports){
+module.exports.canBeStored = function () {
+  return typeof (Storage) != 'undefined'
+}
+
+const localStorage = window.localStorage
+
+module.exports.store = function(secretKey) {
+  localStorage.setItem('secretKey', secretKey)
+}
+
+module.exports.load = function() {
+  return localStorage.getItem('secretKey')
+}
+
+module.exports.remove = function() {
+  localStorage.removeItem('secretKey')
+}
+
+},{}],252:[function(require,module,exports){
 const encryption = require("./encryption.js");
 const firebase = require("./revisit.firebase.js")
 const uuid4 = require('uuid4');

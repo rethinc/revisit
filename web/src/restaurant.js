@@ -2,8 +2,9 @@
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
   let salt = require('./salt.js')
+  let secretKeyStorage = require('./secretkey.js')
 
-  if (typeof (Storage) == 'undefined') {
+  if (!secretKeyStorage.canBeStored()) {
     alert('Sorry, dein Browser wird nicht unterstützt.')
     return
   }
@@ -93,7 +94,7 @@
   auth.onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
       currentUser = firebaseUser
-      let secretKey = getSecretKey()
+      let secretKey = secretKeyStorage.load()
       if (secretKey) {
         showSignedInView(firebaseUser)
       } else {
@@ -126,7 +127,7 @@
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
               } else {
-                saveSecretKey(secretKey)
+                secretKeyStorage.store(secretKey)
                 showSignedInView(firebaseUser)
               }
             })
@@ -145,7 +146,7 @@
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
     loadVisitsUnsubscribe = visits
-      .subscribeToAllVisits(firebaseUser.uid, getSecretKey(), visits => {
+      .subscribeToAllVisits(firebaseUser.uid, secretKeyStorage.load(), visits => {
         visitsTable.setData(visits)
       });
   }
@@ -185,7 +186,7 @@
         textWaiter.value,
         timestamp.selectedDates[0].getTime(),
         currentUser.uid,
-        getSecretKey()
+        secretKeyStorage.load()
       )
         .then(_ => {
           textPhone.value = ''
@@ -197,7 +198,7 @@
   }
 
   function signOut() {
-    removeSecretKey()
+    secretKeyStorage.remove()
     auth.signOut()
   }
 
@@ -232,17 +233,5 @@
       .collection('places')
       .doc(userId)
       .set({challenge: encryptedChallenge}, {merge: true})
-  }
-
-  function saveSecretKey(secretKey) {
-    localstorage.setItem('secretKey', secretKey)
-  }
-
-  function getSecretKey() {
-    return localstorage.getItem('secretKey')
-  }
-
-  function removeSecretKey() {
-    localstorage.removeItem('secretKey')
   }
 }())
