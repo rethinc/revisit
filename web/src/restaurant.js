@@ -1,8 +1,10 @@
 (function () {
+  let revisitFirebase = require('./revisit.firebase.js')
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
   let salt = require('./salt.js')
   let secretKeyStorage = require('./secretkey.js')
+  let challenge = require('./challenge.js')
 
   if (!secretKeyStorage.canBeStored()) {
     alert('Sorry, dein Browser wird nicht unterstützt.')
@@ -11,9 +13,8 @@
   const localstorage = window.localStorage
   const dateTimeFormat = 'd.m.Y H:i'
 
-  const auth = firebase.auth()
-  const db = firebase.firestore()
-  const authUi = new firebaseui.auth.AuthUI(auth)
+  const auth = revisitFirebase.auth
+  const authUi = revisitFirebase.authUi
 
   const containerSignIn = document.getElementById('containerSignIn')
   const containerSignedIn = document.getElementById('containerSignedIn')
@@ -79,9 +80,9 @@
           }
         },
         headerSort: false
-      },
+      }
     ],
-    initialSort:[
+    initialSort: [
       {
         column: 'visitedAt',
         dir: 'desc'
@@ -110,6 +111,8 @@
     containerSecretKey.classList.remove('hide')
     containerSignIn.classList.add('hide')
     containerSignedIn.classList.add('hide')
+    messageSecretError.classList.add('hide')
+    textSecretKey.value = ''
 
     buttonSignOutSecret.addEventListener('click', signOut)
 
@@ -122,7 +125,7 @@
             messageSecretError.classList.remove('hide')
           }
           let secretKey = encryption.deriveKey(password, salt)
-          isSecretKeyValid(db, firebaseUser.uid, secretKey)
+          return challenge.challengeSecretKey(firebaseUser.uid, secretKey)
             .then(isValid => {
               if (!isValid) {
                 messageSecretError.classList.remove('hide')
@@ -148,7 +151,7 @@
     loadVisitsUnsubscribe = visits
       .subscribeToAllVisits(firebaseUser.uid, secretKeyStorage.load(), visits => {
         visitsTable.setData(visits)
-      });
+      })
   }
 
   function showSignInView() {
@@ -164,11 +167,11 @@
     authUi.start('#containerSignIn', {
       signInOptions: [
         {
-          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          provider: revisitFirebase.authContstants.EmailAuthProvider.PROVIDER_ID,
           requireDisplayName: false
         }
       ],
-      credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+      credentialHelper: revisitFirebase.authUiConstants.CredentialHelper.NONE,
       callbacks: {
         signInSuccessWithAuthResult: (authResult, redirectUrl) => {
           return false
@@ -200,38 +203,5 @@
   function signOut() {
     secretKeyStorage.remove()
     auth.signOut()
-  }
-
-  function isSecretKeyValid(db, userId, password, salt) {
-    let challenge = 'This is the challenge!'
-    return db
-      .collection('places')
-      .doc(userId)
-      .get()
-      .then(doc => {
-        let storedChallenge = doc.data()['challenge']
-        if (storedChallenge) {
-          let decrypted = decrypt(storedChallenge, password, salt)
-          return decrypted === challenge
-        } else {
-          return saveEncryptedChallenge(db, userId, password, salt, challenge)
-            .then(e => {
-              return true
-            })
-            .catch(error => {
-              console.error('Could not store encrypted Challenge', error)
-            })
-        }
-      }).catch(error => {
-        console.error('Could not get challenge', error)
-      })
-  }
-
-  function saveEncryptedChallenge(db, userId, password, salt, challenge) {
-    let encryptedChallenge = encryption.encrypt(challenge, password, salt)
-    return db
-      .collection('places')
-      .doc(userId)
-      .set({challenge: encryptedChallenge}, {merge: true})
   }
 }())
