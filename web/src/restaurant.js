@@ -73,7 +73,7 @@
         hozAlign: 'center',
         cellClick: (e, cell) => {
           if (currentUser) {
-            deleteVisit(cell.getRow().getData().id, currentUser.uid)
+            visits.delete(cell.getRow().getData().id, currentUser.uid)
           }
         },
         headerSort: false
@@ -195,18 +195,6 @@
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function deleteVisit(visitId, userId) {
-    db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .doc(visitId)
-      .delete()
-      .catch(error =>
-        console.error(error.message)
-      )
   }
 
   function loadVisits(db, userId) {

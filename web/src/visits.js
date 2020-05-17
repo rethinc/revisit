@@ -1,5 +1,5 @@
-let firestore = require("firebase/firestore");
-let encryption = require("./encryption.js")
+const encryption = require("./encryption.js");
+const firebase = require("./revisit.firebase.js")
 
 module.exports.create = function(
   name,
@@ -18,7 +18,7 @@ module.exports.create = function(
     waiter: encryption.encrypt(waiter, secretKey),
     visitedAt: time
   }
-  return firestore
+  return firebase.firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -26,5 +26,17 @@ module.exports.create = function(
     .set(visit)
     .catch(error =>
       console.error(error.message)
-    )
+    );
+}
+
+module.exports.delete = function(visitId, userId) {
+  firebase.firestore
+    .collection('places')
+    .doc(userId)
+    .collection('visits')
+    .doc(visitId)
+    .delete()
+    .catch(error =>
+      console.error(error.message)
+    );
 }

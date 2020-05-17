@@ -55683,7 +55683,7 @@ var __classPrivateFieldSet;
         hozAlign: 'center',
         cellClick: (e, cell) => {
           if (currentUser) {
-            deleteVisit(cell.getRow().getData().id, currentUser.uid)
+            visits.delete(cell.getRow().getData().id, currentUser.uid)
           }
         },
         headerSort: false
@@ -55805,18 +55805,6 @@ var __classPrivateFieldSet;
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function deleteVisit(visitId, userId) {
-    db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .doc(visitId)
-      .delete()
-      .catch(error =>
-        console.error(error.message)
-      )
   }
 
   function loadVisits(db, userId) {
@@ -55941,8 +55929,8 @@ var __classPrivateFieldSet;
 }())
 
 },{"./encryption.js":193,"./visits.js":237}],237:[function(require,module,exports){
-var firestore = require("firebase/firestore");
-var encryption = require("./encryption.js")
+let firestore = require("firebase/firestore");
+let encryption = require("./encryption.js")
 
 module.exports.create = function(
   name,
@@ -55967,6 +55955,18 @@ module.exports.create = function(
     .collection('visits')
     .doc(visit.id)
     .set(visit)
+    .catch(error =>
+      console.error(error.message)
+    )
+}
+
+module.exports.delete = function(visitId, userId) {
+  db
+    .collection('places')
+    .doc(userId)
+    .collection('visits')
+    .doc(visitId)
+    .delete()
     .catch(error =>
       console.error(error.message)
     )
