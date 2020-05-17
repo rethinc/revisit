@@ -1,5 +1,6 @@
 (function () {
   let encryption = require('./encryption.js')
+  let visits = require('./visits.js')
 
   if (typeof (Storage) == 'undefined') {
     alert('Sorry, dein Browser wird nicht unterstützt.')
@@ -173,40 +174,19 @@
 
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
-      createVisit(textName.value, textPhone.value, textTable.value, textWaiter.value, currentUser.uid)
+      visits.create(textName.value, textPhone.value, textTable.value, textWaiter.value, currentUser.uid, getSecretKey())
+        .then(_ => {
+          textPhone.value = ''
+          textName.value = ''
+          textTable.value = ''
+          textWaiter.value = ''
+        })
     }
   }
 
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function createVisit(name, phone, table, waiter, userId) {
-    let secretKey = getSecretKey()
-    let visit = {
-      id: uuidv4(),
-      name: encrypt(name, secretKey),
-      phone: encrypt(phone, secretKey),
-      table: encrypt(table, secretKey),
-      waiter: encrypt(waiter, secretKey),
-      visitedAt: timestamp.selectedDates[0].getTime()
-    }
-    return db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .doc(visit.id)
-      .set(visit)
-      .then(() => {
-        textPhone.value = ''
-        textName.value = ''
-        textTable.value = ''
-        textWaiter.value = ''
-      })
-      .catch(error =>
-        console.error(error.message)
-      )
   }
 
   function deleteVisit(visitId, userId) {

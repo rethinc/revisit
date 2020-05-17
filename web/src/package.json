@@ -9,6 +9,7 @@
   "author": "re:thinc GmbH",
   "license": "MIT",
   "dependencies": {
-    "crypto-js": "^4.0.0"
+    "crypto-js": "^4.0.0",
+    "firebase": "^7.14.4"
   }
 }
