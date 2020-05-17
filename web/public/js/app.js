@@ -82305,6 +82305,65 @@ var __classPrivateFieldSet;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],247:[function(require,module,exports){
+(function() {
+  function getBytes() {
+    try {
+      // Modern Browser
+      return Array.from(
+        (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(16))
+      );
+    } catch (error) {
+      // Legacy Browser, fallback to Math.random
+      var ret = [];
+      while (ret.length < 16) ret.push((Math.random() * 256) & 0xff);
+      return ret;
+    }
+  }
+
+  function m(v) {
+    v = v.toString(16);
+    if (v.length < 2) v = "0" + v;
+    return v;
+  }
+
+  function genUUID() {
+    var rnd = getBytes();
+    rnd[6] = (rnd[6] & 0x0f) | 0x40;
+    rnd[8] = (rnd[8] & 0x3f) | 0x80;
+    rnd = rnd
+      .map(m)
+      .join("")
+      .match(/(.{8})(.{4})(.{4})(.{4})(.{12})/);
+    rnd.shift();
+    return rnd.join("-");
+  }
+
+  var uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  function isUUID(uuid) {
+    return uuidPattern.test(uuid);
+  }
+
+  genUUID.valid = isUUID;
+
+  // global
+  if (window) {
+    window.uuid4 = genUUID;
+  }
+
+  // Node-style CJS
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = genUUID;
+  }
+
+  // AMD - legacy
+  if (typeof define === "function" && define.amd) {
+    define([], function() {
+      return genUUID;
+    });
+  }
+})();
+
+},{}],248:[function(require,module,exports){
 (function () {
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
@@ -82450,7 +82509,10 @@ var __classPrivateFieldSet;
     containerSecretKey.classList.add('hide')
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
-    loadVisitsUnsubscribe = loadVisits(db, firebaseUser.uid)
+    loadVisitsUnsubscribe = visits
+      .subscribeToAllVisits(firebaseUser.uid, getSecretKey(), visits => {
+        visitsTable.setData(visits)
+      });
   }
 
   function showSignInView() {
@@ -82502,36 +82564,6 @@ var __classPrivateFieldSet;
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function loadVisits(db, userId) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .onSnapshot(querySnapshot => {
-        var visits = []
-        querySnapshot.forEach(doc => {
-          visits.push(mapVisit(doc))
-        })
-        currentData = new Set(visits)
-        visitsTable.setData(visits)
-      }, error => {
-        console.error(error.message)
-      })
-  }
-
-  function mapVisit(doc) {
-    let docData = doc.data()
-    let secretKey = getSecretKey()
-    return {
-      id: doc.id,
-      name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
-      phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
-      table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
-      waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
-      visitedAt: docData.visitedAt ? docData.visitedAt : ''
-    }
   }
 
   function getOrCreateSalt(db, userId) {
@@ -82625,7 +82657,7 @@ var __classPrivateFieldSet;
   }
 }())
 
-},{"./encryption.js":193,"./visits.js":249}],248:[function(require,module,exports){
+},{"./encryption.js":193,"./visits.js":250}],249:[function(require,module,exports){
 let firebase = require('firebase');
 require("firebase/firestore"); // Needed for side effects
 
@@ -82643,9 +82675,10 @@ firebase.initializeApp(firebaseConfig)
 
 module.exports.firestore = firebase.firestore();
 
-},{"firebase":243,"firebase/firestore":244}],249:[function(require,module,exports){
+},{"firebase":243,"firebase/firestore":244}],250:[function(require,module,exports){
 const encryption = require("./encryption.js");
 const firebase = require("./revisit.firebase.js")
+const uuid4 = require('uuid4');
 
 module.exports.create = function(
   name,
@@ -82676,7 +82709,7 @@ module.exports.create = function(
 }
 
 module.exports.delete = function(visitId, userId) {
-  firebase.firestore
+  return firebase.firestore
     .collection('places')
     .doc(userId)
     .collection('visits')
@@ -82687,4 +82720,33 @@ module.exports.delete = function(visitId, userId) {
     );
 }
 
-},{"./encryption.js":193,"./revisit.firebase.js":248}]},{},[247]);
+module.exports.subscribeToAllVisits = function(userId, secretKey, handler) {
+    return firebase.firestore
+      .collection('places')
+      .doc(userId)
+      .collection('visits')
+      .onSnapshot(querySnapshot => {
+        var visits = [];
+        querySnapshot.forEach(doc => {
+          visits.push(mapVisit(doc, secretKey));
+        });
+        handler(visits);
+      }, error => {
+        console.error(error.message)
+      });
+}
+
+function mapVisit(doc, secretKey) {
+  let docData = doc.data();
+  return {
+    id: doc.id,
+    name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
+    phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
+    table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
+    waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
+    visitedAt: docData.visitedAt ? docData.visitedAt : ''
+  };
+}
+
+
+},{"./encryption.js":193,"./revisit.firebase.js":249,"uuid4":247}]},{},[248]);

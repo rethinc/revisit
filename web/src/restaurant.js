@@ -143,7 +143,10 @@
     containerSecretKey.classList.add('hide')
     buttonCreate.addEventListener('click', createVisitFromForm)
     buttonSignOut.addEventListener('click', signOut)
-    loadVisitsUnsubscribe = loadVisits(db, firebaseUser.uid)
+    loadVisitsUnsubscribe = visits
+      .subscribeToAllVisits(firebaseUser.uid, getSecretKey(), visits => {
+        visitsTable.setData(visits)
+      });
   }
 
   function showSignInView() {
@@ -195,36 +198,6 @@
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function loadVisits(db, userId) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .collection('visits')
-      .onSnapshot(querySnapshot => {
-        var visits = []
-        querySnapshot.forEach(doc => {
-          visits.push(mapVisit(doc))
-        })
-        currentData = new Set(visits)
-        visitsTable.setData(visits)
-      }, error => {
-        console.error(error.message)
-      })
-  }
-
-  function mapVisit(doc) {
-    let docData = doc.data()
-    let secretKey = getSecretKey()
-    return {
-      id: doc.id,
-      name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
-      phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
-      table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
-      waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
-      visitedAt: docData.visitedAt ? docData.visitedAt : ''
-    }
   }
 
   function getOrCreateSalt(db, userId) {
