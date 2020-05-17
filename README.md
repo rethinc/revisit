@@ -6,7 +6,7 @@ Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnu
 ## Entwicklung
 Das Projekt wurde in einem Wochenend Effort der re:thincers realisiert um den Gastro-Sektor in diesen speziellen Zeiten zu unterstützen.
 
-⚠️ **Disclaimer:** Die Code Qualität soll nicht als referenz genommen werden ;) Das Ziel war es möglichst in kurzer Zeit eine funktionierende Anwendung "zusammen zu häcken" als proof of concept und sofort einsetzbares Produkt. Falls die Plattform grösseres Interesse stösst, werden wir die Codebase überarbeiten, damit wir auch mehr freude am Sourcecode der Anwendung haben!
+⚠️ **Disclaimer:** Die Code Qualität soll nicht als Referenz genommen werden ;) Das Ziel war es möglichst in kurzer Zeit eine funktionierende Anwendung "zusammen zu häcken" als Proof of Concept und sofort einsetzbares Produkt. Falls die Plattform auf grösseres Interesse stösst, werden wir die Codebase überarbeiten, damit wir die Anwendung einfacher erweitern können und sie wartbar wird!
 
 
 ### Ablauf
