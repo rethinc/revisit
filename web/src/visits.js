@@ -1,13 +1,22 @@
-var firestore = require("firebase/firestore");
+let firestore = require("firebase/firestore");
+let encryption = require("./encryption.js")
 
-module.exports.create = function(name, phone, table, waiter, userId, secretKey) {
+module.exports.create = function(
+  name,
+  phone,
+  table,
+  waiter,
+  time,
+  userId,
+  secretKey
+) {
   let visit = {
     id: uuidv4(),
-    name: encrypt(name, secretKey),
-    phone: encrypt(phone, secretKey),
-    table: encrypt(table, secretKey),
-    waiter: encrypt(waiter, secretKey),
-    visitedAt: timestamp.selectedDates[0].getTime()
+    name: encryption.encrypt(name, secretKey),
+    phone: encryption.encrypt(phone, secretKey),
+    table: encryption.encrypt(table, secretKey),
+    waiter: encryption.encrypt(waiter, secretKey),
+    visitedAt: time
   }
   return firestore
     .collection('places')

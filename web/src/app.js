@@ -55784,7 +55784,15 @@ var __classPrivateFieldSet;
 
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
-      visits.create(textName.value, textPhone.value, textTable.value, textWaiter.value, currentUser.uid, getSecretKey())
+      visits.create(
+        textName.value,
+        textPhone.value,
+        textTable.value,
+        textWaiter.value,
+        timestamp.selectedDates[0].getTime(),
+        currentUser.uid,
+        getSecretKey()
+      )
         .then(_ => {
           textPhone.value = ''
           textName.value = ''
@@ -55934,15 +55942,24 @@ var __classPrivateFieldSet;
 
 },{"./encryption.js":193,"./visits.js":237}],237:[function(require,module,exports){
 var firestore = require("firebase/firestore");
+var encryption = require("./encryption.js")
 
-module.exports.create = function(name, phone, table, waiter, userId, secretKey) {
+module.exports.create = function(
+  name,
+  phone,
+  table,
+  waiter,
+  time,
+  userId,
+  secretKey
+) {
   let visit = {
     id: uuidv4(),
-    name: encrypt(name, secretKey),
-    phone: encrypt(phone, secretKey),
-    table: encrypt(table, secretKey),
-    waiter: encrypt(waiter, secretKey),
-    visitedAt: timestamp.selectedDates[0].getTime()
+    name: encryption.encrypt(name, secretKey),
+    phone: encryption.encrypt(phone, secretKey),
+    table: encryption.encrypt(table, secretKey),
+    waiter: encryption.encrypt(waiter, secretKey),
+    visitedAt: time
   }
   return firestore
     .collection('places')
@@ -55955,4 +55972,4 @@ module.exports.create = function(name, phone, table, waiter, userId, secretKey) 
     )
 }
 
-},{"firebase/firestore":234}]},{},[236]);
+},{"./encryption.js":193,"firebase/firestore":234}]},{},[236]);

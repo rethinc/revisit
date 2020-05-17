@@ -174,7 +174,15 @@
 
   function createVisitFromForm() {
     if (currentUser && textName.value && textPhone.value) {
-      visits.create(textName.value, textPhone.value, textTable.value, textWaiter.value, currentUser.uid, getSecretKey())
+      visits.create(
+        textName.value,
+        textPhone.value,
+        textTable.value,
+        textWaiter.value,
+        timestamp.selectedDates[0].getTime(),
+        currentUser.uid,
+        getSecretKey()
+      )
         .then(_ => {
           textPhone.value = ''
           textName.value = ''
