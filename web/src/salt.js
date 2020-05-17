@@ -2,7 +2,6 @@ const encryption = require('./encryption.js')
 const firebase = require('./revisit.firebase.js')
 
 module.exports.getOrCreate = function (userId) {
-  console.log(userId)
   return getSalt(userId)
     .then((salt) => {
       if (salt) {
