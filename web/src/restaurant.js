@@ -1,6 +1,7 @@
 (function () {
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
+  let salt = require('./salt.js')
 
   if (typeof (Storage) == 'undefined') {
     alert('Sorry, dein Browser wird nicht unterstützt.')
@@ -113,7 +114,7 @@
 
     buttonSecretKey.addEventListener('click', e => {
       messageSecretError.classList.add('hide')
-      getOrCreateSalt(db, firebaseUser.uid)
+      salt.getOrCreate(firebaseUser.uid)
         .then(salt => {
           let password = textSecretKey.value
           if (!password || password === '') {
@@ -198,51 +199,6 @@
   function signOut() {
     removeSecretKey()
     auth.signOut()
-  }
-
-  function getOrCreateSalt(db, userId) {
-    return getSalt(db, userId)
-      .then((salt) => {
-        if (salt) {
-          return salt
-        } else {
-          var newSalt = encryption.createSaltBase64()
-          return storeSalt(db, userId, newSalt)
-            .then(i => {
-              return newSalt
-            })
-        }
-      }).catch(error => {
-          console.error('Could not get or create salt', error)
-        }
-      )
-  }
-
-  function getSalt(db, userId) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()['salt']
-        } else {
-          return null
-        }
-      })
-      .catch(error => {
-        console.error('Could not get salt', error)
-      })
-  }
-
-  function storeSalt(db, userId, salt) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .set({salt: salt}, {merge: true})
-      .catch(error => {
-        console.error('Could not store salt', error)
-      })
   }
 
   function isSecretKeyValid(db, userId, password, salt) {

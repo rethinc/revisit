@@ -82367,6 +82367,7 @@ var __classPrivateFieldSet;
 (function () {
   let encryption = require('./encryption.js')
   let visits = require('./visits.js')
+  let salt = require('./salt.js')
 
   if (typeof (Storage) == 'undefined') {
     alert('Sorry, dein Browser wird nicht unterstützt.')
@@ -82479,7 +82480,7 @@ var __classPrivateFieldSet;
 
     buttonSecretKey.addEventListener('click', e => {
       messageSecretError.classList.add('hide')
-      getOrCreateSalt(db, firebaseUser.uid)
+      salt.getOrCreate(firebaseUser.uid)
         .then(salt => {
           let password = textSecretKey.value
           if (!password || password === '') {
@@ -82566,51 +82567,6 @@ var __classPrivateFieldSet;
     auth.signOut()
   }
 
-  function getOrCreateSalt(db, userId) {
-    return getSalt(db, userId)
-      .then((salt) => {
-        if (salt) {
-          return salt
-        } else {
-          var newSalt = encryption.createSaltBase64()
-          return storeSalt(db, userId, newSalt)
-            .then(i => {
-              return newSalt
-            })
-        }
-      }).catch(error => {
-          console.error('Could not get or create salt', error)
-        }
-      )
-  }
-
-  function getSalt(db, userId) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()['salt']
-        } else {
-          return null
-        }
-      })
-      .catch(error => {
-        console.error('Could not get salt', error)
-      })
-  }
-
-  function storeSalt(db, userId, salt) {
-    return db
-      .collection('places')
-      .doc(userId)
-      .set({salt: salt}, {merge: true})
-      .catch(error => {
-        console.error('Could not store salt', error)
-      })
-  }
-
   function isSecretKeyValid(db, userId, password, salt) {
     let challenge = 'This is the challenge!'
     return db
@@ -82657,7 +82613,7 @@ var __classPrivateFieldSet;
   }
 }())
 
-},{"./encryption.js":193,"./visits.js":250}],249:[function(require,module,exports){
+},{"./encryption.js":193,"./salt.js":250,"./visits.js":251}],249:[function(require,module,exports){
 let firebase = require('firebase');
 require("firebase/firestore"); // Needed for side effects
 
@@ -82676,6 +82632,55 @@ firebase.initializeApp(firebaseConfig)
 module.exports.firestore = firebase.firestore();
 
 },{"firebase":243,"firebase/firestore":244}],250:[function(require,module,exports){
+const encryption = require('./encryption.js')
+const firebase = require('./revisit.firebase.js')
+
+module.exports.getOrCreate = function (userId) {
+  return getSalt(userId)
+    .then((salt) => {
+      if (salt) {
+        return salt
+      } else {
+        var newSalt = encryption.createSaltBase64()
+        return storeSalt(userId, newSalt)
+          .then(i => {
+            return newSalt
+          })
+      }
+    }).catch(error => {
+      console.error(error.message)
+    })
+}
+
+function getSalt(userId) {
+  return firebase.firestore
+    .collection('places')
+    .doc(userId)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return doc.data()['salt']
+      } else {
+        return null
+      }
+    })
+    .catch(error => {
+      console.error(error.message)
+    })
+}
+
+
+function storeSalt(userId, salt) {
+  return firebase.firestore
+    .collection('places')
+    .doc(userId)
+    .set({salt: salt}, {merge: true})
+    .catch(error => {
+      console.error(error.message)
+    })
+}
+
+},{"./encryption.js":193,"./revisit.firebase.js":249}],251:[function(require,module,exports){
 const encryption = require("./encryption.js");
 const firebase = require("./revisit.firebase.js")
 const uuid4 = require('uuid4');
