@@ -27,6 +27,10 @@ main() {
   fi
 
   pushd "${dir}/src/restaurant"
+    test -f "firebase.config.js" || {
+     echo "Please add ${dir}/src/restaurant/firebase.config.js"
+     exit 1
+    }
     ${npm} install
     ${browserify} restaurant.js -o ../../public/js/restaurant.js
   popd
