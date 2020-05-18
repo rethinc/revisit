@@ -1,13 +1,5 @@
   const firebase = require('firebase/app')
-  const firebaseConfig = {
-    apiKey: 'AIzaSyAFPTOBgRVaunHBY5tP1wiZbjnwQLC9y_A',
-    authDomain: 'gastro-checkin.firebaseapp.com',
-    databaseURL: 'https://gastro-checkin.firebaseio.com',
-    projectId: 'gastro-checkin',
-    storageBucket: 'gastro-checkin.appspot.com',
-    messagingSenderId: '1077652043096',
-    appId: '1:1077652043096:web:d88109016e93a447e0612d'
-  }
+  const firebaseConfig = require('./firebase.config.js').firebaseConfig
   firebase.initializeApp(firebaseConfig)
   require('firebase/firestore') // Needed for side effects
   const firebaseui = require('firebaseui')

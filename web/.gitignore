@@ -66,3 +66,7 @@ node_modules/
 
 #idea
 .idea
+
+src/restaurant/firebase.config.js
+
+public/js/restaurant.js

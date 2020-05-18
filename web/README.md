@@ -9,6 +9,6 @@ npm install -g browserify
 
 ## Deploy
 ```
-cd encryption; browserify encryption.js -o ../public/js/encryption.js
+cd src/restaurant; npm install; browserify restaurant.js -o ../../public/js/restaurant.js
 firebase deploy
 ```
