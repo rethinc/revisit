@@ -28,7 +28,7 @@ main() {
 
   pushd "${dir}/src/restaurant"
     test -f "firebase.config.js" || {
-     echo "Please add ${dir}/src/restaurant/firebase.config.js"
+     echo "Please add ${dir}/src/restaurant/firebase.config.js from rethinc-signing repo."
      exit 1
     }
     ${npm} install
