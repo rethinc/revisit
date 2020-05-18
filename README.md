@@ -11,7 +11,7 @@ Das Projekt wurde in einem Wochenend Effort der re:thincers realisiert um den Ga
 ⚠️ **Disclaimer:** Die Code Qualität soll nicht als Referenz genommen werden ;) Das Ziel war es möglichst in kurzer Zeit eine funktionierende Anwendung "zusammen zu häcken" als Proof of Concept und sofort einsetzbares Produkt. Falls die Plattform auf grösseres Interesse stösst, werden wir die Codebase überarbeiten, damit wir die Anwendung einfacher erweitern können und sie wartbar wird!
 
 
-### Ablauf
+## Ablauf
 Ein Gastrobetrieb registriert sich auf der Platform und lädt eine App auf sein Smartphone und loggt sich ein.
 
 Der Kunde geht mit seinem Mobiltelefon auf eine Webseite und gibt seine Daten (Namen, Telefonnummer) an. Die Webseite generiert aus diesen Daten einen QRCode. Der Kunde speichert den QRCode auf seinem Gerät. Es werden keine Daten sonst gesepeichert. Die Webseite dient nur der Generierung des QRCodes.
