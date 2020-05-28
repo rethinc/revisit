@@ -3,7 +3,7 @@
 [https://www.revisit.ch](https://www.revisit.ch)
 
 ## Idee
-Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnummern ihrere Gäste zu registrieren. Dies soll das tracken von Kontakten im Falle einer Erkrankung eines Gastes vereinfachen. Diese Applikation soll die Gastrobetriebe dabei unterstützen, dies auf einfache und sichere Art zu machen.
+Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnummern ihrer Gäste registrieren. Dies soll das tracken von Kontakten im Falle einer Erkrankung eines Gastes vereinfachen. Diese Applikation soll die Gastrobetriebe dabei unterstützen, dies auf einfache und sichere Art zu machen.
 
 ## Entwicklung
 Das Projekt wurde in einem Wochenend Effort der re:thincers realisiert um den Gastro-Sektor in diesen speziellen Zeiten zu unterstützen.
