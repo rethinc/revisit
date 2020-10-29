@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
+        keyStore.clear()
         firebaseAuth.signOut()
         SignInActivity.launch(this)
         finish()

@@ -59,4 +59,7 @@ class GastroCheckinKeyStore(
             }
         }
 
+    fun clear() {
+        secretsStore.clear()
+    }
 }
