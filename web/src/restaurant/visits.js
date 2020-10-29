@@ -62,14 +62,23 @@ module.exports.subscribeToAllVisits = function(firestore, userId, secretKey, han
 
 function mapVisit(doc, secretKey) {
   let docData = doc.data();
-  return {
-    id: doc.id,
-    name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
-    zip: docData.zip ? encryption.decrypt(docData.zip, secretKey) : '',
-    phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
-    table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
-    waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
-    visitedAt: docData.visitedAt ? docData.visitedAt : ''
-  };
+  try {
+    return {
+      id: doc.id,
+      name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
+      zip: docData.zip ? encryption.decrypt(docData.zip, secretKey) : '',
+      phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
+      table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
+      waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
+      visitedAt: docData.visitedAt ? docData.visitedAt : ''
+    };
+  } catch (e) {
+    return {
+      id: doc.id,
+      name: 'Entschlüsslungsfehler',
+      visitedAt: docData.visitedAt ? docData.visitedAt : ''
+    }
+  }
+
 }
 
