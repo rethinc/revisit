@@ -29,7 +29,8 @@ Format für den QRCode:
 ```
 {
 	"name": "Bettina Probiert",
-	"phone": "+41776665544"
+	"phone": "+41776665544",
+	"postalCode": "3084"
 }
 ```
 
