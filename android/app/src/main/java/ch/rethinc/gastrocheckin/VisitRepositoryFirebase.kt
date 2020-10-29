@@ -35,6 +35,7 @@ class VisitRepositoryFirebase(
     private fun encrypt(visit: Visit): Visit =
         visit.copy(
             name = encryptor.encrypt(visit.name) ?: "",
+            postalCode = encryptor.encrypt(visit.postalCode) ?: "",
             phone = encryptor.encrypt(visit.phone) ?: "",
             table = encryptor.encrypt(visit.table) ?: "",
             waiter = encryptor.encrypt(visit.waiter) ?: ""
