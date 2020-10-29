@@ -19,7 +19,7 @@
   const containerSecretKey = document.getElementById('containerSecretKey')
   const buttonSignOut = document.getElementById('buttonSignOut')
   const textName = document.getElementById('textName')
-  const textZIP = document.getElementById('textZIP')
+  const textPostalCode = document.getElementById('textPostalCode')
   const textPhone = document.getElementById('textPhone')
   const textTable = document.getElementById('textTable')
   const textWaiter = document.getElementById('textWaiter')
@@ -59,8 +59,8 @@
         field: 'phone'
       },
       {
-        title: 'Postleitzahl ZIP',
-        field: 'zip'
+        title: 'Postleitzahl PLZ',
+        field: 'postalCode'
       },
       {
         title: 'Datum',
@@ -185,11 +185,11 @@
   }
 
   function createVisitFromForm() {
-    if (currentUser && textName.value && textZIP.value && textPhone.value) {
+    if (currentUser && textName.value && textPostalCode.value && textPhone.value) {
       visits.create(
         firestore,
         textName.value,
-        textZIP.value,
+        textPostalCode.value,
         textPhone.value,
         textTable.value,
         textWaiter.value,
@@ -199,7 +199,7 @@
       )
         .then(_ => {
           textPhone.value = ''
-          textZIP.value = ''
+          textPostalCode.value = ''
           textName.value = ''
           textTable.value = ''
           textWaiter.value = ''

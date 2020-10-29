@@ -3,12 +3,12 @@ function getUserData () {
   const urlParams = new URLSearchParams(queryString)
   const name = urlParams.get('name')
   const phone = urlParams.get('phone')
-  const zip = urlParams.get('zip')
-  if (name && phone && zip) {
+  const postalCode = urlParams.get('postalCode')
+  if (name && phone && postalCode) {
     return {
       'name': name,
       'phone': phone,
-      'zip': zip
+      'postalCode': postalCode
     }
   } else {
     return null
@@ -33,7 +33,7 @@ function generateQrCode (userData) {
 function fillOutFormData (userData) {
   document.getElementById('textName').value = userData.name
   document.getElementById('textPhone').value = userData.phone
-  document.getElementById('textZIP').value = userData.zip
+  document.getElementById('textPostalCode').value = userData.postalCode
 }
 
 function userDataPresent () {
