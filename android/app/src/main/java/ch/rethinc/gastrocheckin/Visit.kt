@@ -5,6 +5,7 @@ import java.util.*
 data class Visit(
     val id: String,
     val name: String,
+    val postalCode: String,
     val phone: String,
     val visitedAt: Long,
     val table: String,
@@ -16,6 +17,7 @@ data class Visit(
                 id = UUID.randomUUID().toString(),
                 name = person.name,
                 phone =  person.phone,
+                postalCode = person.postalCode,
                 visitedAt = System.currentTimeMillis(),
                 table = additionalInformation.table,
                 waiter = additionalInformation.waiter

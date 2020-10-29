@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         introMessageContainer.visibility = GONE
         val person = Person.fromJson(qrCodeValue)
         if (person != null) {
-            showPendingMessage("${person.name}\n${person.phone}")
+            showPendingMessage("${person.name}\n${person.phone}\n${person.postalCode}")
             additionalInformationForm.visibility = VISIBLE
             save.visibility = VISIBLE
             loadAdditionalInformation()

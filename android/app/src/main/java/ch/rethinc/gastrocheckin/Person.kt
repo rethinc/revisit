@@ -4,7 +4,8 @@ import com.google.gson.Gson
 
 data class Person(
     val name: String,
-    val phone: String
+    val phone: String,
+    val postalCode: String
 ) {
     companion object {
         fun fromJson(json: String): Person? {
