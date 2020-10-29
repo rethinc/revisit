@@ -4,6 +4,7 @@ const uuid4 = require('uuid4');
 module.exports.create = function(
   firestore,
   name,
+  zip,
   phone,
   table,
   waiter,
@@ -14,6 +15,7 @@ module.exports.create = function(
   let visit = {
     id: uuid4(),
     name: encryption.encrypt(name, secretKey),
+    zip: encryption.encrypt(zip, secretKey),
     phone: encryption.encrypt(phone, secretKey),
     table: encryption.encrypt(table, secretKey),
     waiter: encryption.encrypt(waiter, secretKey),
@@ -63,6 +65,7 @@ function mapVisit(doc, secretKey) {
   return {
     id: doc.id,
     name: docData.name ? encryption.decrypt(docData.name, secretKey) : '',
+    zip: docData.zip ? encryption.decrypt(docData.zip, secretKey) : '',
     phone: docData.phone ? encryption.decrypt(docData.phone, secretKey) : '',
     table: docData.table ? encryption.decrypt(docData.table, secretKey) : '',
     waiter: docData.waiter ? encryption.decrypt(docData.waiter, secretKey) : '',
