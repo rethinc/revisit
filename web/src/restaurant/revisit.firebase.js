@@ -1,8 +1,8 @@
-  const firebase = require('firebase/app')
-  const firebaseConfig = require('./firebase.config.js').firebaseConfig
-  firebase.initializeApp(firebaseConfig)
-  require('firebase/firestore') // Needed for side effects
-  const firebaseui = require('firebaseui')
+import firebase from "firebase"
+const firebaseConfig = require('./firebase.config.js').firebaseConfig
+firebase.initializeApp(firebaseConfig)
+require('firebase/firestore') // Needed for side effects
+const firebaseui = require('firebaseui')
 
 
 module.exports.firestore = firebase.firestore()

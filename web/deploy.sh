@@ -13,11 +13,12 @@ main() {
     exit 1
   fi
 
-	browserify=$(which browserify || true)
-	if [ -z "${browserify:-}" ]; then
-	  echo "You need to install browserify run `npm install -g browserify`"
-	  exit 1
+  browserify=$(which browserify || true)
+  if [ -z "${browserify:-}" ]; then
+    echo "You need to install browserify run `npm install -g browserify`"
+    exit 1
   fi
+
 
   echo "firebase"
 
@@ -34,7 +35,9 @@ main() {
     }
 
     ${npm} install
-    ${browserify} restaurant.js -o ../../public/js/restaurant.js
+    ${browserify} restaurant.js -o ../../public/js/restaurant.js -t \
+    [ babelify --presets [ @babel/preset-env ] --global ]
+
   popd
 
   pushd "${dir}/functions"
