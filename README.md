@@ -1,6 +1,8 @@
 # re:visit
 
 [https://www.revisit.ch](https://www.revisit.ch)
+[https://www.buymeacoffee.com/rethinc](Buy us a coffee)
+
 
 ## Idee
 Gemäss Empfehlung des Bundes sollen alle Gastrobetriebe die Namen und Telefonnummern ihrer Gäste registrieren. Dies soll das tracken von Kontakten im Falle einer Erkrankung eines Gastes vereinfachen. Diese Applikation soll die Gastrobetriebe dabei unterstützen, dies auf einfache und sichere Art zu machen.
