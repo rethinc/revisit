@@ -1,7 +1,8 @@
 # re:visit
 
 [https://www.revisit.ch](https://www.revisit.ch)
-[https://www.buymeacoffee.com/rethinc](Buy us a coffee)
+
+[Spendiere uns einen Kaffee](https://www.buymeacoffee.com/rethinc)
 
 
 ## Idee
